@@ -17,15 +17,16 @@
   --shadow-elevated: 0 20px 40px -12px rgba(0, 0, 0, 0.12);
 }
 
+/* src/app/globals.css — replace the :root block */
 :root {
-  --background: 44 33% 98%;
-  --foreground: 0 0% 8%;
-  --surface: 44 20% 96%;
-  --border: 44 10% 88%;
-  --border-strong: 44 8% 78%;
+  --background: 0 0% 100%;
+  --foreground: 0 0% 7%;
+  --surface: 140 12% 97%;
+  --border: 140 8% 89%;
+  --border-strong: 140 6% 78%;
   --muted-foreground: 0 0% 40%;
-  --accent: 14 100% 55%;
-  --primary-foreground: 44 33% 98%;
+  --accent: 142 68% 29%;
+  --primary-foreground: 0 0% 100%;
 }
 
 @layer base {

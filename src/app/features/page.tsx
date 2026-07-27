@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import { MediaCta } from "@/components/sections/media-cta";
 import { Reveal } from "@/components/effects/reveal";
 import { FeatureBlock } from "@/components/sections/feature-block";
 import { FeatureGrid } from "@/components/sections/feature-grid";
@@ -46,6 +47,15 @@ export default function FeaturesPage() {
           </Reveal>
         </div>
       </section>
+      <MediaCta
+        image="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1600&q=80"
+        heading="Try it once. You'll never go back to a membership."
+        description="Download the app, unlock your first pass and see what a frictionless workout day feels like."
+        primaryHref="/onboarding"
+        primaryLabel="Get the app"
+        secondaryHref="/pricing"
+        secondaryLabel="See pricing"
+      />
 
       <section className="border-b border-border bg-background">
         <div className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">

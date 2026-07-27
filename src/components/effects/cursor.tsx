@@ -83,10 +83,8 @@ export function CustomCursor() {
           height: isPointer ? (label ? 76 : 52) : 30,
           opacity: isVisible ? 1 : 0,
           scale: isPressed ? 0.85 : 1,
-          backgroundColor: isPointer
-            ? "rgba(255,122,26,0.08)"
-            : "rgba(0,0,0,0)",
-          borderColor: isPointer ? "rgba(255,122,26,0.55)" : "rgba(0,0,0,0.25)",
+          backgroundColor: isPointer ? "rgba(21,128,61,0.08)" : "rgba(0,0,0,0)",
+          borderColor: isPointer ? "rgba(21,128,61,0.55)" : "rgba(0,0,0,0.25)",
         }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       >

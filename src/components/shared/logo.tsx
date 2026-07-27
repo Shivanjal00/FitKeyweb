@@ -1,13 +1,18 @@
 // src/components/shared/logo.tsx
 import Link from "next/link";
-import { KeyRound } from "lucide-react";
+import Image from "next/image";
 
 export function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2.5">
-      <span className="grid h-9 w-9 place-items-center rounded-xl bg-foreground text-primary-foreground">
-        <KeyRound className="h-4 w-4" strokeWidth={2.4} />
-      </span>
+      <Image
+        src="/logo.png"
+        alt="FitKey"
+        width={36}
+        height={36}
+        className="h-9 w-9 object-contain"
+        priority
+      />
       <span className="text-[15px] font-semibold tracking-tight font-heading">
         FitKey
       </span>
