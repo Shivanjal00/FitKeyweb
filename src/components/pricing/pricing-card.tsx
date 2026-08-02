@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { PricingPlan } from "@/lib/data/pricing";
 import { Reveal } from "@/components/effects/reveal";
@@ -9,15 +10,19 @@ import { TiltCard } from "@/components/effects/tilt-card";
 
 export function PricingCard({
   plan,
+  billing,
   delay,
 }: {
   plan: PricingPlan;
+  billing: "monthly" | "yearly";
   delay: number;
 }) {
+  const price = billing === "yearly" ? plan.yearlyPrice : plan.monthlyPrice;
+
   return (
     <Reveal delay={delay}>
       <TiltCard
-        tiltStrength={5}
+        tiltStrength={4}
         className={`relative h-full rounded-[28px] border p-8 transition-colors duration-500 ${
           plan.highlighted
             ? "border-foreground bg-foreground text-primary-foreground shadow-elevated"
@@ -25,8 +30,8 @@ export function PricingCard({
         }`}
       >
         {plan.highlighted && (
-          <span className="absolute -top-3 left-8 rounded-full bg-accent px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-primary-foreground">
-            Most popular
+          <span className="absolute right-8 top-8 rounded-full bg-accent px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-primary-foreground">
+            Most loved
           </span>
         )}
 
@@ -35,11 +40,25 @@ export function PricingCard({
         >
           {plan.name}
         </h3>
+        <p
+          className={`mt-1 text-[13.5px] ${plan.highlighted ? "text-primary-foreground/70" : "text-muted-foreground"}`}
+        >
+          {plan.tagline}
+        </p>
 
-        <div className="mt-4 flex items-baseline gap-1.5">
-          <span className="text-[42px] font-semibold tracking-tight">
-            ₹{plan.price}
-          </span>
+        <div className="mt-5 flex items-baseline gap-1.5">
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={price}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.25 }}
+              className="text-[40px] font-semibold tracking-tight"
+            >
+              ₹{price.toLocaleString("en-IN")}
+            </motion.span>
+          </AnimatePresence>
           <span
             className={
               plan.highlighted
@@ -50,12 +69,6 @@ export function PricingCard({
             {plan.unit}
           </span>
         </div>
-
-        <p
-          className={`mt-3 text-[14px] leading-relaxed ${plan.highlighted ? "text-primary-foreground/80" : "text-muted-foreground"}`}
-        >
-          {plan.description}
-        </p>
 
         <ul className="mt-6 space-y-3 text-[14px]">
           {plan.features.map((feature) => (
@@ -76,7 +89,7 @@ export function PricingCard({
               : "bg-foreground text-primary-foreground"
           }`}
         >
-          Choose {plan.name}
+          {plan.cta}
         </Link>
       </TiltCard>
     </Reveal>

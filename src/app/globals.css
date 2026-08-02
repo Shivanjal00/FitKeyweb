@@ -40,12 +40,4 @@
   h4 {
     font-family: var(--font-heading);
   }
-
-  @media (pointer: fine) {
-    body,
-    a,
-    button {
-      cursor: none;
-    }
-  }
 }

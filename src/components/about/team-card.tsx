@@ -17,13 +17,13 @@ export function TeamCard({
 }) {
   return (
     <Reveal delay={delay}>
-      <TiltCard tiltStrength={4} glow={false} className="group">
+      <TiltCard tiltStrength={4} className="group">
         <div className="relative aspect-square overflow-hidden rounded-3xl border border-border">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={image}
             alt={name}
-            className="h-full w-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
         <h3 className="mt-4 text-[15px] font-semibold text-foreground">

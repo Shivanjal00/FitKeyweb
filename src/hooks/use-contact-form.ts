@@ -1,7 +1,8 @@
-// src/hooks/use-contact-form.ts
+// src/hooks/use-contact-form.ts — replace entirely
 "use client";
 
 import { useState } from "react";
+import { subjectOptions } from "@/lib/data/contact";
 
 interface FormData {
   name: string;
@@ -13,13 +14,17 @@ interface FormData {
 interface FormErrors {
   name?: string;
   email?: string;
-  subject?: string;
   message?: string;
 }
 
 type SubmitStatus = "idle" | "submitting" | "success" | "error";
 
-const initialData: FormData = { name: "", email: "", subject: "", message: "" };
+const initialData: FormData = {
+  name: "",
+  email: "",
+  subject: subjectOptions[0],
+  message: "",
+};
 
 export function useContactForm() {
   const [data, setData] = useState<FormData>(initialData);
@@ -28,7 +33,9 @@ export function useContactForm() {
 
   const update = (field: keyof FormData, value: string) => {
     setData((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
+    if (field !== "subject" && errors[field as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
   };
 
   const validate = (): boolean => {
@@ -37,7 +44,6 @@ export function useContactForm() {
     if (!data.email.trim()) next.email = "Please enter your email";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email))
       next.email = "That doesn't look like a valid email";
-    if (!data.subject.trim()) next.subject = "Please add a subject";
     if (!data.message.trim() || data.message.trim().length < 10)
       next.message = "Message should be at least 10 characters";
 

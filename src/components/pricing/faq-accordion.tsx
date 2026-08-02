@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Plus } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import { faqs } from "@/lib/data/pricing";
 import { Reveal } from "@/components/effects/reveal";
 
@@ -11,26 +11,28 @@ export function FaqAccordion() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <div className="mx-auto max-w-2xl divide-y divide-border">
+    <div className="mx-auto max-w-2xl space-y-3">
       {faqs.map((faq, i) => {
         const isOpen = openIndex === i;
         return (
-          <Reveal key={faq.q} delay={i * 0.06}>
-            <div className="py-5">
+          <Reveal key={faq.q} delay={i * 0.05}>
+            <div
+              className={`rounded-2xl border px-6 transition-colors ${isOpen ? "border-foreground/30 bg-surface" : "border-border bg-background"}`}
+            >
               <button
                 onClick={() => setOpenIndex(isOpen ? null : i)}
-                className="flex w-full items-center justify-between gap-4 text-left"
+                className="flex w-full items-center justify-between gap-4 py-5 text-left"
               >
                 <span className="text-[15px] font-medium text-foreground">
                   {faq.q}
                 </span>
-                <motion.span
-                  animate={{ rotate: isOpen ? 45 : 0 }}
-                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-border"
-                >
-                  <Plus className="h-3.5 w-3.5" />
-                </motion.span>
+                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-border">
+                  {isOpen ? (
+                    <Minus className="h-3.5 w-3.5" />
+                  ) : (
+                    <Plus className="h-3.5 w-3.5" />
+                  )}
+                </span>
               </button>
 
               <AnimatePresence initial={false}>
@@ -39,10 +41,10 @@ export function FaqAccordion() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                     className="overflow-hidden"
                   >
-                    <p className="pt-3 text-[14px] leading-relaxed text-muted-foreground">
+                    <p className="pb-5 text-[14px] leading-relaxed text-muted-foreground">
                       {faq.a}
                     </p>
                   </motion.div>

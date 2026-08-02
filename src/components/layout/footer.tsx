@@ -5,6 +5,7 @@ import { Logo } from "@/components/shared/logo";
 const productLinks = [
   { href: "/features", label: "Features" },
   { href: "/gyms", label: "Gyms" },
+  { href: "/libraries", label: "Libraries" },
   { href: "/pricing", label: "Pricing" },
 ];
 const companyLinks = [
