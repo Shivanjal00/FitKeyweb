@@ -1,11 +1,21 @@
 // src/components/effects/tilt-card.tsx
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-interface TiltCardProps {
+type NativeDivProps = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  | "onDrag"
+  | "onDragStart"
+  | "onDragEnd"
+  | "onAnimationStart"
+  | "onAnimationEnd"
+  | "onAnimationIteration"
+>;
+
+interface TiltCardProps extends NativeDivProps {
   children: React.ReactNode;
   className?: string;
   tiltStrength?: number;
@@ -19,9 +29,11 @@ export function TiltCard({
   tiltStrength = 6,
   glow = true,
   lift = true,
+  ...rest
 }: TiltCardProps) {
-  const ref = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
+  const [pressed, setPressed] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
 
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
@@ -34,7 +46,7 @@ export function TiltCard({
     useTransform(mouseX, [0, 1], [-tiltStrength, tiltStrength]),
     { stiffness: 220, damping: 22 },
   );
-  const liftY = useSpring(hovered && lift ? -6 : 0, {
+  const liftY = useSpring(hovered && lift && !isTouch ? -6 : 0, {
     stiffness: 260,
     damping: 24,
   });
@@ -46,33 +58,55 @@ export function TiltCard({
   );
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
+    if (isTouch) return;
+    const rect = e.currentTarget.getBoundingClientRect();
     mouseX.set((e.clientX - rect.left) / rect.width);
     mouseY.set((e.clientY - rect.top) / rect.height);
   }
 
   function handleLeave() {
+    if (isTouch) return;
     setHovered(false);
     mouseX.set(0.5);
     mouseY.set(0.5);
   }
 
+  function handleTouchStart() {
+    setIsTouch(true);
+    setPressed(true);
+    mouseX.set(0.5);
+    mouseY.set(0.5);
+  }
+
+  function handleTouchEnd() {
+    setPressed(false);
+  }
+
   return (
     <motion.div
-      ref={ref}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={handleLeave}
-      style={{ rotateX, rotateY, y: liftY, transformPerspective: 900 }}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
+      animate={{ scale: pressed ? 0.98 : 1 }}
+      style={{
+        rotateX: isTouch ? 0 : rotateX,
+        rotateY: isTouch ? 0 : rotateY,
+        y: liftY,
+        transformPerspective: 900,
+      }}
+      transition={{ scale: { duration: 0.15, ease: "easeOut" } }}
       className={cn("relative [transform-style:preserve-3d]", className)}
+      {...rest}
     >
       {glow && (
         <motion.div
           aria-hidden
           className="pointer-events-none absolute inset-0 z-10 rounded-[inherit]"
           style={{ background: glowBackground }}
-          animate={{ opacity: hovered ? 1 : 0 }}
+          animate={{ opacity: hovered || pressed ? 1 : 0 }}
           transition={{ duration: 0.25 }}
         />
       )}
