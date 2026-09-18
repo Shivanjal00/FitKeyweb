@@ -17,7 +17,7 @@ export function TeamCard({
 }) {
   return (
     <Reveal delay={delay}>
-      <TiltCard tiltStrength={4} className="group">
+      <TiltCard className="group">
         <div className="relative aspect-square overflow-hidden rounded-3xl border border-border">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

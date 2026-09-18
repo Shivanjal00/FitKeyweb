@@ -18,7 +18,7 @@ export function HowItWorks() {
             three taps.
           </h2>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-            We built FitKey so the friction between deciding to train and
+            We built Gymbym so the friction between deciding to train and
             actually training disappears. No signup fees, no monthly minimum —
             just show up.
           </p>

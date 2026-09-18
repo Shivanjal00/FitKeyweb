@@ -22,10 +22,7 @@ export function Testimonials() {
         <div className="mt-14 grid gap-5 md:grid-cols-3">
           {testimonials.map((t, i) => (
             <Reveal key={t.name} delay={i * 0.1}>
-              <TiltCard
-                tiltStrength={4}
-                className="h-full rounded-3xl border border-border bg-surface p-7"
-              >
+              <TiltCard className="h-full rounded-3xl border border-border bg-surface p-7">
                 <Quote className="h-6 w-6 text-accent" />
                 <p className="mt-4 text-[14.5px] leading-relaxed text-foreground/85">
                   {t.quote}

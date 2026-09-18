@@ -4,10 +4,25 @@
 import { useState } from "react";
 import { Search, SlidersHorizontal, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useGymsStore, SortOption } from "@/store/gyms-store";
-import { categories } from "@/lib/data/gyms";
 
-const sortOptions: { value: SortOption; label: string }[] = [
+export type GymSort =
+  | "recommended"
+  | "nearest"
+  | "price-low"
+  | "price-high"
+  | "rating";
+
+interface Props {
+  search: string;
+  setSearch: (v: string) => void;
+  category: string;
+  setCategory: (v: string) => void;
+  sort: GymSort;
+  setSort: (v: GymSort) => void;
+  categories: string[];
+}
+
+const sortOptions: { value: GymSort; label: string }[] = [
   { value: "recommended", label: "Recommended" },
   { value: "nearest", label: "Nearest" },
   { value: "price-low", label: "Price: Low to High" },
@@ -15,9 +30,15 @@ const sortOptions: { value: SortOption; label: string }[] = [
   { value: "rating", label: "Top rated" },
 ];
 
-export function GymFilters() {
-  const { search, category, sort, setSearch, setCategory, setSort } =
-    useGymsStore();
+export function GymFilters({
+  search,
+  setSearch,
+  category,
+  setCategory,
+  sort,
+  setSort,
+  categories,
+}: Props) {
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   return (
@@ -57,7 +78,7 @@ export function GymFilters() {
               </label>
               <select
                 value={sort}
-                onChange={(e) => setSort(e.target.value as SortOption)}
+                onChange={(e) => setSort(e.target.value as GymSort)}
                 className="mt-2 w-full rounded-xl border border-border bg-background px-3 py-2.5 text-[14px] text-foreground focus:border-foreground focus:outline-none"
               >
                 {sortOptions.map((opt) => (

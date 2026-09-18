@@ -4,7 +4,6 @@
 import { useState } from "react";
 import { Search, SlidersHorizontal, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { libraryCategories } from "@/lib/data/libraries";
 
 export type LibrarySort =
   | "recommended"
@@ -20,6 +19,7 @@ interface Props {
   setCategory: (v: string) => void;
   sort: LibrarySort;
   setSort: (v: LibrarySort) => void;
+  categories: string[];
 }
 
 const sortOptions: { value: LibrarySort; label: string }[] = [
@@ -37,6 +37,7 @@ export function LibraryFilters({
   setCategory,
   sort,
   setSort,
+  categories,
 }: Props) {
   const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -92,7 +93,7 @@ export function LibraryFilters({
       </AnimatePresence>
 
       <div className="flex flex-wrap gap-2">
-        {libraryCategories.map((cat) => (
+        {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setCategory(cat)}

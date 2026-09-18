@@ -26,10 +26,7 @@ export function ContactMethodCard({
 
   return (
     <Reveal delay={delay}>
-      <TiltCard
-        tiltStrength={4}
-        className="group h-full rounded-3xl border border-border bg-background p-7 transition-colors duration-500 hover:border-foreground/40 hover:shadow-elevated"
-      >
+      <TiltCard className="group h-full rounded-3xl border border-border bg-background p-7 transition-colors duration-500 hover:border-foreground/40 hover:shadow-elevated">
         <div className="grid h-10 w-10 place-items-center rounded-full border border-accent/30 text-accent transition-colors group-hover:bg-accent group-hover:text-primary-foreground">
           <Icon className="h-4.5 w-4.5" strokeWidth={1.8} />
         </div>

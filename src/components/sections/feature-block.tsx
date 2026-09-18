@@ -2,6 +2,7 @@
 
 import { LucideIcon } from "lucide-react";
 import { Reveal } from "@/components/effects/reveal";
+import Image from "next/image";
 
 interface FeatureBlockProps {
   index: string;
@@ -32,10 +33,12 @@ export function FeatureBlock({
         <div className="relative">
           <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] border border-border">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={image}
               alt=""
-              className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out hover:scale-105"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
             />
           </div>
           <div className="absolute -bottom-6 -right-4 hidden h-24 w-40 rounded-2xl border border-border bg-surface p-4 shadow-elevated md:block">

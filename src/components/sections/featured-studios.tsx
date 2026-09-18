@@ -3,9 +3,10 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/effects/reveal";
 import { GymCard } from "@/components/gyms/gym-card";
-import { gyms } from "@/lib/data/gyms";
+import { getGyms } from "@/lib/data/gyms";
 
-export function FeaturedStudios() {
+export async function FeaturedStudios() {
+  const gyms = await getGyms();
   const featured = gyms.slice(0, 4);
 
   return (

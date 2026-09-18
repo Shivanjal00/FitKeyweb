@@ -11,10 +11,7 @@ export function OfficesGrid() {
     <div className="space-y-4">
       {offices.map((office, i) => (
         <Reveal key={office.city} delay={i * 0.08}>
-          <TiltCard
-            tiltStrength={3}
-            className="rounded-3xl border border-border bg-surface p-6"
-          >
+          <TiltCard className="rounded-3xl border border-border bg-surface p-6">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <h3 className="text-[17px] font-semibold text-foreground">
                 {office.city}

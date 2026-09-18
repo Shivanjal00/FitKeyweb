@@ -11,7 +11,6 @@ import { MobileMenu } from "@/components/layout/mobile-menu";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/features", label: "Features" },
   { href: "/gyms", label: "Gyms" },
   { href: "/libraries", label: "Libraries" },
   { href: "/pricing", label: "Pricing" },

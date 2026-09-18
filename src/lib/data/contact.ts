@@ -3,9 +3,9 @@ export const contactMethods = [
   {
     icon: "mail" as const,
     label: "Email",
-    value: "hello@fitkey.app",
+    value: "support@gymbym.com",
     note: "Replies within a few hours",
-    href: "mailto:hello@fitkey.app",
+    href: "mailto:support@gymbym.com",
   },
   {
     icon: "phone" as const,

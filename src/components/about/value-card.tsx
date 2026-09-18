@@ -27,10 +27,7 @@ export function ValueCard({
 
   return (
     <Reveal delay={delay}>
-      <TiltCard
-        tiltStrength={5}
-        className="h-full rounded-3xl border border-border bg-surface p-7"
-      >
+      <TiltCard className="h-full rounded-3xl border border-border bg-surface p-7">
         <div className="grid h-10 w-10 place-items-center rounded-full border border-accent/30 text-accent">
           <Icon className="h-4.5 w-4.5" strokeWidth={1.8} />
         </div>

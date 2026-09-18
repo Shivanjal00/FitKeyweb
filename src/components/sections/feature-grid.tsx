@@ -42,10 +42,7 @@ export function FeatureGrid({
           <div className="grid gap-4 sm:grid-cols-2">
             {items.map((item, i) => (
               <Reveal key={item.title} delay={i * 0.06}>
-                <TiltCard
-                  tiltStrength={5}
-                  className="group h-full rounded-3xl border border-border bg-background p-6 transition-colors duration-500 hover:border-foreground/40 hover:shadow-elevated"
-                >
+                <TiltCard className="group h-full rounded-3xl border border-border bg-background p-6 transition-colors duration-500 hover:border-foreground/40 hover:shadow-elevated">
                   {" "}
                   <div className="inline-grid h-10 w-10 place-items-center rounded-xl border border-border bg-surface text-foreground transition-colors group-hover:border-accent group-hover:text-accent">
                     <item.icon

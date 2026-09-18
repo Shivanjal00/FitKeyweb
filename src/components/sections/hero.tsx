@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Sparkles, Star, MapPin } from "lucide-react";
 import { Reveal } from "@/components/effects/reveal";
+import Image from "next/image";
 
 const avatars = [
   "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80",
@@ -67,13 +68,18 @@ export function Hero() {
             <div className="flex items-center gap-3">
               <div className="flex -space-x-3">
                 {avatars.map((src) => (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <div
                     key={src}
-                    src={src}
-                    alt=""
-                    className="h-9 w-9 rounded-full border-2 border-background object-cover"
-                  />
+                    className="relative h-9 w-9 overflow-hidden rounded-full border-2 border-background"
+                  >
+                    <Image
+                      src={src}
+                      alt=""
+                      fill
+                      sizes="36px"
+                      className="object-cover"
+                    />
+                  </div>
                 ))}
               </div>
               <div>
@@ -92,11 +98,13 @@ export function Hero() {
       <Reveal delay={0.3}>
         <div className="relative mx-auto max-w-7xl px-5 pb-24 md:px-8">
           <div className="relative aspect-[16/8] overflow-hidden rounded-[32px] border border-border md:aspect-[16/6]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1600&q=80"
               alt="Gym floor"
-              className="h-full w-full object-cover"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
             />
             <div className="absolute bottom-4 left-4 flex items-center gap-3 rounded-2xl border border-border bg-background/90 p-3 pr-5 shadow-elevated backdrop-blur md:bottom-6 md:left-6">
               <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-foreground text-primary-foreground text-[13px] font-bold">

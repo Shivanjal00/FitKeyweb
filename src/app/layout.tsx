@@ -18,9 +18,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "FitKey — Discover gyms near you",
+  title: "Gymbym — Discover gyms near you",
   description:
-    "Browse nearby gyms, compare memberships and book passes instantly with FitKey.",
+    "Browse nearby gyms, compare memberships and book passes instantly with Gymbym.",
 };
 
 export default function RootLayout({

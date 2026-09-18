@@ -1,96 +1,64 @@
 // src/lib/data/gyms.ts
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+
+export interface GymPlan {
+  name: string;
+  price: number;
+}
+
 export interface Gym {
   id: string;
   name: string;
+  about?: string;
+  address?: string;
   area: string;
-  distanceKm: number;
-  rating: number;
-  pricePerDay: number;
-  status: "open" | "closed";
-  tags: string[];
+  category: string;
+  distance?: string;
+  gallery?: string[];
+  hours?: string;
   image: string;
+  open: boolean;
+  phone?: string;
+  plans: GymPlan[];
+  price: number;
+  rating: number;
+  reviews?: number;
+  tags: string[];
+  trainer?: string;
 }
 
-export const gyms: Gym[] = [
-  {
-    id: "iron-atelier",
-    name: "Iron Atelier",
-    area: "Indiranagar",
-    distanceKm: 0.8,
-    rating: 4.9,
-    pricePerDay: 249,
-    status: "open",
-    tags: ["Strength", "CrossFit"],
-    image:
-      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: "stillwater-yoga-house",
-    name: "Stillwater Yoga House",
-    area: "Koramangala",
-    distanceKm: 1.4,
-    rating: 4.8,
-    pricePerDay: 199,
-    status: "open",
-    tags: ["Yoga", "Women Only"],
-    image:
-      "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: "northline-crossfit",
-    name: "Northline CrossFit",
-    area: "HSR Layout",
-    distanceKm: 2.2,
-    rating: 4.7,
-    pricePerDay: 299,
-    status: "closed",
-    tags: ["CrossFit", "Cardio"],
-    image:
-      "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: "meridian-fit-club",
-    name: "Meridian Fit Club",
-    area: "Whitefield",
-    distanceKm: 3.6,
-    rating: 4.6,
-    pricePerDay: 349,
-    status: "open",
-    tags: ["Cardio", "Strength"],
-    image:
-      "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: "knockout-boxing-club",
-    name: "Knockout Boxing Club",
-    area: "Jayanagar",
-    distanceKm: 4.2,
-    rating: 4.8,
-    pricePerDay: 279,
-    status: "open",
-    tags: ["Strength", "Cardio"],
-    image:
-      "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: "zenspace-yoga",
-    name: "ZenSpace Yoga & Breath",
-    area: "JP Nagar",
-    distanceKm: 4.9,
-    rating: 4.9,
-    pricePerDay: 219,
-    status: "closed",
-    tags: ["Yoga", "Women Only"],
-    image:
-      "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80",
-  },
-];
+export async function getGyms(): Promise<Gym[]> {
+  const snapshot = await getDocs(collection(db, "gyms"));
 
-export const categories = [
-  "All",
-  "Strength",
-  "Yoga",
-  "CrossFit",
-  "Cardio",
-  "Women Only",
-] as const;
+  return snapshot.docs.map((doc) => {
+    const data = doc.data();
+    const plans: GymPlan[] = data.plans ?? [];
+
+    return {
+      id: doc.id,
+      name: data.name ?? "Unnamed gym",
+      about: data.about,
+      address: data.address,
+      area: data.area ?? "",
+      category: data.category ?? "General",
+      distance: data.distance || undefined,
+      gallery: data.gallery ?? [],
+      hours: data.hours,
+      image: data.image ?? data.gallery?.[0] ?? "",
+      open: data.open ?? false,
+      phone: data.phone,
+      plans,
+      price: data.price ?? plans[0]?.price ?? 0,
+      rating: data.rating ?? 0,
+      reviews: data.reviews,
+      tags: data.tags ?? [],
+      trainer: data.trainer,
+    };
+  });
+}
+
+export function getGymCategories(gyms: Gym[]): string[] {
+  const unique = Array.from(new Set(gyms.map((g) => g.category))).sort();
+  return ["All", ...unique];
+}

@@ -11,10 +11,7 @@ export function LibraryCta() {
     <section className="bg-background">
       <div className="mx-auto max-w-7xl px-5 pb-24 md:px-8">
         <Reveal>
-          <TiltCard
-            tiltStrength={2}
-            className="relative overflow-hidden rounded-[32px] bg-foreground p-10 text-primary-foreground md:p-14"
-          >
+          <TiltCard className="relative overflow-hidden rounded-[32px] bg-foreground p-10 text-primary-foreground md:p-14">
             <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary-foreground/50">
               Run a library?
             </span>

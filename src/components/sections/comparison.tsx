@@ -25,7 +25,7 @@ export function Comparison() {
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
             <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-              Why FitKey
+              Why Gymbym
             </span>
             <h2 className="mt-4 text-[34px] font-semibold leading-[1.05] tracking-tight text-foreground md:text-[48px]">
               Memberships are broken. This isn&apos;t.
@@ -36,7 +36,6 @@ export function Comparison() {
         <div className="mt-14 grid gap-4 md:grid-cols-2">
           <Reveal>
             <TiltCard
-              tiltStrength={3}
               glow={false}
               className="h-full rounded-[28px] border border-border bg-surface p-8"
             >
@@ -57,12 +56,9 @@ export function Comparison() {
           </Reveal>
 
           <Reveal delay={0.12}>
-            <TiltCard
-              tiltStrength={3}
-              className="h-full rounded-[28px] border border-foreground bg-foreground p-8 text-primary-foreground"
-            >
+            <TiltCard className="h-full rounded-[28px] border border-foreground bg-foreground p-8 text-primary-foreground">
               <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary-foreground/60">
-                FitKey
+                Gymbym
               </div>
               <ul className="mt-5 space-y-3 text-[15px]">
                 {fitkey.map((item) => (

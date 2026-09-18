@@ -9,10 +9,7 @@ export function SupportSidebar() {
   return (
     <div className="space-y-5">
       <Reveal>
-        <TiltCard
-          tiltStrength={3}
-          className="rounded-3xl border border-border bg-surface p-6"
-        >
+        <TiltCard className="rounded-3xl border border-border bg-surface p-6">
           <div className="flex items-center gap-2.5">
             <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-accent/30 text-accent">
               <Clock className="h-3.5 w-3.5" />
@@ -48,10 +45,7 @@ export function SupportSidebar() {
       </Reveal>
 
       <Reveal delay={0.08}>
-        <TiltCard
-          tiltStrength={3}
-          className="rounded-3xl bg-foreground p-6 text-primary-foreground"
-        >
+        <TiltCard className="rounded-3xl bg-foreground p-6 text-primary-foreground">
           <div className="flex items-center gap-2.5">
             <Building2 className="h-4 w-4" />
             <span className="text-[14px] font-semibold">Partner a studio</span>
@@ -61,10 +55,10 @@ export function SupportSidebar() {
             month with zero listing fees.
           </p>
           <a
-            href="mailto:partners@fitkey.app"
+            href="mailto:shivanjal@gymbym.com"
             className="mt-4 inline-flex items-center gap-1 text-[13px] font-semibold"
           >
-            partners@fitkey.app
+            shivanjal@gymbym.com
             <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
         </TiltCard>

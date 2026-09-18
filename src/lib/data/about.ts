@@ -3,7 +3,7 @@ export const story = {
   eyebrow: "Our story",
   heading: ["Fitness, without the friction.", "Built by people who train."],
   description:
-    "We started FitKey because signing up for a gym felt harder than the workout itself. Long contracts, hidden fees, and buildings that never quite matched the brochure. So we built a single pass — and a promise to make every studio worth walking into.",
+    "We started Gymbym because signing up for a gym felt harder than the workout itself. Long contracts, hidden fees, and buildings that never quite matched the brochure. So we built a single pass — and a promise to make every studio worth walking into.",
   images: [
     "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1000&q=80",
     "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=700&q=80",

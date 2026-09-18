@@ -22,7 +22,6 @@ export function PricingCard({
   return (
     <Reveal delay={delay}>
       <TiltCard
-        tiltStrength={4}
         className={`relative h-full rounded-[28px] border p-8 transition-colors duration-500 ${
           plan.highlighted
             ? "border-foreground bg-foreground text-primary-foreground shadow-elevated"

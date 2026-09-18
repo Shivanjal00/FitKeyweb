@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Logo } from "@/components/shared/logo";
 
 const productLinks = [
-  { href: "/features", label: "Features" },
   { href: "/gyms", label: "Gyms" },
   { href: "/libraries", label: "Libraries" },
   { href: "/pricing", label: "Pricing" },
@@ -51,7 +50,7 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col-reverse items-start justify-between gap-4 border-t border-border pt-6 text-[12px] text-muted-foreground md:flex-row md:items-center">
-          <p>© 2026 FitKey. Crafted in Bengaluru.</p>
+          <p>© 2026 Gymbym. Crafted in Bengaluru.</p>
           <div className="flex gap-5">
             <a href="#" className="hover:text-foreground">
               Privacy

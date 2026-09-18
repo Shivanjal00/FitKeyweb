@@ -9,10 +9,7 @@ export function CTA() {
     <section className="bg-surface">
       <div className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
         <Reveal>
-          <TiltCard
-            tiltStrength={2}
-            className="relative overflow-hidden rounded-[36px] border border-border bg-background p-10 md:p-16"
-          >
+          <TiltCard className="relative overflow-hidden rounded-[36px] border border-border bg-background p-10 md:p-16">
             <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/10 blur-3xl" />
             <div className="relative flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
               <div className="max-w-2xl">
