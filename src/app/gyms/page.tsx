@@ -3,6 +3,11 @@ import { MapPin } from "lucide-react";
 import { Reveal } from "@/components/effects/reveal";
 import { getGyms, getGymCategories } from "@/lib/data/gyms";
 import { GymsPageClient } from "@/components/gyms/gyms-page-client";
+export const metadata = {
+  title: "Gyms",
+  description:
+    "Browse verified gyms across Delhi NCR. Filter by category, compare pricing and unlock a pass instantly.",
+};
 
 export const revalidate = 60;
 

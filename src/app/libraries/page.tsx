@@ -4,6 +4,12 @@ import { Reveal } from "@/components/effects/reveal";
 import { getLibraries, getLibraryCategories } from "@/lib/data/libraries";
 import { LibrariesPageClient } from "@/components/libraries/libraries-page-client";
 
+export const metadata = {
+  title: "Libraries",
+  description:
+    "Find silent study rooms, 24x7 reading spaces and coworking libraries across Delhi NCR.",
+};
+
 export const revalidate = 60;
 
 export default async function LibrariesPage() {

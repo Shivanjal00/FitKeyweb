@@ -4,6 +4,7 @@ import { Manrope, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { AuthProvider } from "@/contexts/auth-context";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -18,9 +19,42 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Gymbym — Discover gyms near you",
+  metadataBase: new URL("https://gymbym.com"),
+  title: {
+    default: "Gymbym — Find Gyms & Libraries Near You",
+    template: "%s | Gymbym",
+  },
   description:
-    "Browse nearby gyms, compare memberships and book passes instantly with Gymbym.",
+    "Discover verified gyms and libraries in Delhi NCR. Compare pricing, amenities and ratings, then unlock a pass — no memberships, no lock-ins.",
+  keywords: [
+    "gymbym",
+    "gyms near me",
+    "libraries near me",
+    "Delhi NCR gyms",
+    "study rooms Delhi",
+    "fitness pass",
+  ],
+  openGraph: {
+    title: "Gymbym — Find Gyms & Libraries Near You",
+    description:
+      "Discover verified gyms and libraries in Delhi NCR. Compare pricing, amenities and ratings, then unlock a pass.",
+    url: "https://gymbym.com",
+    siteName: "Gymbym",
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gymbym — Find Gyms & Libraries Near You",
+    description: "Discover verified gyms and libraries in Delhi NCR.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  verification: {
+    google: "T-dPeFbNfcvj6anctjaY8krYS_KYTNbT-SUld9y2G-4",
+  },
 };
 
 export default function RootLayout({
@@ -31,9 +65,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${manrope.variable} ${inter.variable}`}>
       <body className="min-h-screen bg-background text-foreground antialiased font-body">
-        <Navbar />
-        <main className="pt-16">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          <main className="pt-16">{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

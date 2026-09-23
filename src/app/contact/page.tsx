@@ -8,6 +8,12 @@ import { SupportSidebar } from "@/components/contact/support-sidebar";
 import { OfficesGrid } from "@/components/contact/offices-grid";
 import { contactMethods } from "@/lib/data/contact";
 
+export const metadata = {
+  title: "Contact",
+  description:
+    "Get in touch with the Gymbym team for support, partnerships or press inquiries.",
+};
+
 export default function ContactPage() {
   return (
     <>

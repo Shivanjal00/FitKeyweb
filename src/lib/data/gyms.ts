@@ -1,5 +1,5 @@
 // src/lib/data/gyms.ts
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 export interface GymPlan {
@@ -61,4 +61,33 @@ export async function getGyms(): Promise<Gym[]> {
 export function getGymCategories(gyms: Gym[]): string[] {
   const unique = Array.from(new Set(gyms.map((g) => g.category))).sort();
   return ["All", ...unique];
+}
+
+export async function getGymById(id: string): Promise<Gym | null> {
+  const snap = await getDoc(doc(db, "gyms", id));
+  if (!snap.exists()) return null;
+
+  const data = snap.data();
+  const plans: GymPlan[] = data.plans ?? [];
+
+  return {
+    id: snap.id,
+    name: data.name ?? "Unnamed gym",
+    about: data.about,
+    address: data.address,
+    area: data.area ?? "",
+    category: data.category ?? "General",
+    distance: data.distance || undefined,
+    gallery: data.gallery ?? [],
+    hours: data.hours,
+    image: data.image ?? data.gallery?.[0] ?? "",
+    open: data.open ?? false,
+    phone: data.phone,
+    plans,
+    price: data.price ?? plans[0]?.price ?? 0,
+    rating: data.rating ?? 0,
+    reviews: data.reviews,
+    tags: data.tags ?? [],
+    trainer: data.trainer,
+  };
 }

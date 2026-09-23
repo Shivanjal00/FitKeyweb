@@ -1,5 +1,5 @@
 // src/lib/data/libraries.ts
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 export interface LibraryPlan {
@@ -51,4 +51,28 @@ export async function getLibraries(): Promise<Library[]> {
 export function getLibraryCategories(libraries: Library[]): string[] {
   const unique = Array.from(new Set(libraries.flatMap((l) => l.tags))).sort();
   return ["All", ...unique];
+}
+
+export async function getLibraryById(id: string): Promise<Library | null> {
+  const snap = await getDoc(doc(db, "libraries", id));
+  if (!snap.exists()) return null;
+
+  const data = snap.data();
+  const plans: LibraryPlan[] = data.plans ?? [];
+
+  return {
+    id: snap.id,
+    name: data.name ?? "Unnamed library",
+    about: data.about,
+    area: data.area ?? "",
+    distance: data.distance || undefined,
+    hours: data.hours,
+    image: data.image ?? "",
+    open: data.open ?? false,
+    plans,
+    price: plans[0]?.price ?? 0,
+    rating: data.rating ?? 0,
+    seats: data.seats,
+    tags: data.tags ?? [],
+  };
 }

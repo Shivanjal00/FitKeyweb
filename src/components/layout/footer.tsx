@@ -52,15 +52,15 @@ export function Footer() {
         <div className="mt-14 flex flex-col-reverse items-start justify-between gap-4 border-t border-border pt-6 text-[12px] text-muted-foreground md:flex-row md:items-center">
           <p>© 2026 Gymbym. Crafted in Bengaluru.</p>
           <div className="flex gap-5">
-            <a href="#" className="hover:text-foreground">
+            <Link href="/privacy" className="hover:text-foreground">
               Privacy
-            </a>
-            <a href="#" className="hover:text-foreground">
+            </Link>
+            <Link href="/terms" className="hover:text-foreground">
               Terms
-            </a>
-            <a href="#" className="hover:text-foreground">
+            </Link>
+            <Link href="/cookies" className="hover:text-foreground">
               Cookies
-            </a>
+            </Link>
           </div>
         </div>
       </div>
