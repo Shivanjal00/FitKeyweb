@@ -1,3 +1,4 @@
+// src/components/sections/comparison.tsx
 "use client";
 
 import { Reveal } from "@/components/effects/reveal";
@@ -5,18 +6,16 @@ import { TiltCard } from "@/components/effects/tilt-card";
 
 export function Comparison() {
   const oldWay = [
-    "12-month lock-in contracts",
-    "One studio, one commute",
-    "Cancellation via phone call",
-    "Hidden joining fees",
-    "Guest passes cost extra",
+    "Choose one gym",
+    "Pay separately",
+    "Locked to one location",
+    "Travel becomes inconvenient",
   ];
-  const fitkey = [
-    "Pay per day, week or month",
-    "Hundreds of studios, one key",
-    "Cancel in two taps",
-    "Transparent pricing, always",
-    "Bring a friend on eligible passes",
+  const gymbym = [
+    "One subscription",
+    "Choose any participating gym",
+    "Train where convenient",
+    "One account",
   ];
 
   return (
@@ -28,27 +27,24 @@ export function Comparison() {
               Why Gymbym
             </span>
             <h2 className="mt-4 text-[34px] font-semibold leading-[1.05] tracking-tight text-foreground md:text-[48px]">
-              Memberships are broken. This isn&apos;t.
+              One subscription. Multiple gyms across Delhi.
             </h2>
           </div>
         </Reveal>
 
         <div className="mt-14 grid gap-4 md:grid-cols-2">
           <Reveal>
-            <TiltCard
-              glow={false}
-              className="h-full rounded-[28px] border border-border bg-surface p-8"
-            >
+            <TiltCard className="h-full rounded-[28px] border border-border bg-surface p-8">
               <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                Old way
+                Traditional gym membership
               </div>
               <ul className="mt-5 space-y-3 text-[15px] text-foreground/80">
-                {oldWay.map((item) => (
+                {oldWay.map((item, i) => (
                   <li key={item} className="flex items-start gap-3">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-border-strong" />
-                    <span className="line-through decoration-border-strong/60">
-                      {item}
+                    <span className="mt-1.5 text-[11px] font-semibold text-border-strong">
+                      {i + 1}
                     </span>
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -61,14 +57,16 @@ export function Comparison() {
                 Gymbym
               </div>
               <ul className="mt-5 space-y-3 text-[15px]">
-                {fitkey.map((item) => (
+                {gymbym.map((item, i) => (
                   <li key={item} className="flex items-start gap-3">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-accent" />
+                    <span className="mt-1.5 text-[11px] font-semibold text-accent">
+                      {i + 1}
+                    </span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
-            </TiltCard>{" "}
+            </TiltCard>
           </Reveal>
         </div>
       </div>

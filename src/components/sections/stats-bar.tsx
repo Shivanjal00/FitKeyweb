@@ -1,56 +1,41 @@
 // src/components/sections/stats-bar.tsx
-"use client";
-
-import { useEffect, useRef } from "react";
-import { useInView, useMotionValue, useSpring } from "framer-motion";
+import { MapPin, Sparkles, Handshake } from "lucide-react";
 import { Reveal } from "@/components/effects/reveal";
 
-const stats = [
-  { label: "Partner studios", value: 400, suffix: "+", decimals: 0 },
-  { label: "Cities across India", value: 12, suffix: "", decimals: 0 },
-  { label: "Active members", value: 25, suffix: "k", decimals: 0 },
-  { label: "App store rating", value: 4.9, suffix: "★", decimals: 1 },
+const items = [
+  {
+    icon: MapPin,
+    title: "Launching in Delhi",
+    description: "Starting local, growing city by city.",
+  },
+  {
+    icon: Sparkles,
+    title: "Founding members opening soon",
+    description: "Be among the first to join.",
+  },
+  {
+    icon: Handshake,
+    title: "Partner gyms joining Gymbym",
+    description: "New studios added every week.",
+  },
 ];
-
-function AnimatedNumber({
-  value,
-  decimals,
-}: {
-  value: number;
-  decimals: number;
-}) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-40px" });
-  const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { damping: 24, stiffness: 70 });
-
-  useEffect(() => {
-    if (inView) motionValue.set(value);
-  }, [inView, value, motionValue]);
-
-  useEffect(() => {
-    return springValue.on("change", (latest) => {
-      if (ref.current) ref.current.textContent = latest.toFixed(decimals);
-    });
-  }, [springValue, decimals]);
-
-  return <span ref={ref}>0</span>;
-}
 
 export function StatsBar() {
   return (
     <section className="border-b border-border bg-foreground text-primary-foreground">
       <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          {stats.map((stat, i) => (
-            <Reveal key={stat.label} delay={i * 0.08}>
-              <div className="text-center md:text-left">
-                <div className="text-[36px] font-semibold tracking-tight md:text-[48px]">
-                  <AnimatedNumber value={stat.value} decimals={stat.decimals} />
-                  {stat.suffix}
+        <div className="grid gap-8 md:grid-cols-3">
+          {items.map((item, i) => (
+            <Reveal key={item.title} delay={i * 0.08}>
+              <div className="flex items-start gap-3">
+                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-primary-foreground/20 text-accent">
+                  <item.icon className="h-4.5 w-4.5" />
                 </div>
-                <div className="mt-1 text-[13px] text-primary-foreground/60">
-                  {stat.label}
+                <div>
+                  <div className="text-[15px] font-semibold">{item.title}</div>
+                  <div className="mt-0.5 text-[13px] text-primary-foreground/60">
+                    {item.description}
+                  </div>
                 </div>
               </div>
             </Reveal>

@@ -8,7 +8,15 @@ import { TiltCard } from "@/components/effects/tilt-card";
 import Image from "next/image";
 import Link from "next/link";
 
-export function GymCard({ gym, index }: { gym: Gym; index: number }) {
+export function GymCard({
+  gym,
+  index,
+  distanceOverride,
+}: {
+  gym: Gym;
+  index: number;
+  distanceOverride?: string;
+}) {
   return (
     <motion.div
       layout
@@ -51,7 +59,9 @@ export function GymCard({ gym, index }: { gym: Gym; index: number }) {
           <div className="p-5">
             <div className="flex items-center gap-1 text-[12.5px] text-muted-foreground">
               <MapPin className="h-3.5 w-3.5" /> {gym.area}
-              {gym.distance ? ` · ${gym.distance}` : ""}
+              {distanceOverride || gym.distance
+                ? ` · ${distanceOverride || gym.distance}`
+                : ""}
             </div>
             <h3 className="mt-1 text-[17px] font-semibold text-foreground">
               {gym.name}

@@ -10,9 +10,9 @@ export const contactMethods = [
   {
     icon: "phone" as const,
     label: "Phone",
-    value: "+91 80 4718 2200",
+    value: "+91 8273045785",
     note: "Mon–Sat, 9am–8pm IST",
-    href: "tel:+918047182200",
+    href: "tel:+918273045785",
   },
   {
     icon: "chat" as const,
@@ -25,29 +25,17 @@ export const contactMethods = [
 
 export const subjectOptions = [
   "General question",
-  "Booking support",
-  "Partner a studio",
+  "Membership support",
+  "Partner a gym",
   "Press & media",
   "Careers",
 ];
 
 export const offices = [
   {
-    city: "Bengaluru",
+    city: "Delhi",
     tag: "Headquarters",
-    address: "4th Floor, Prestige Atrium, Church Street, Bengaluru 560001",
-    hours: "Mon–Fri · 10:00 – 19:00",
-  },
-  {
-    city: "Mumbai",
-    tag: "West India",
-    address: "WeWork Enam Sambhav, BKC, Bandra East, Mumbai 400051",
-    hours: "Mon–Fri · 10:00 – 19:00",
-  },
-  {
-    city: "Delhi NCR",
-    tag: "North India",
-    address: "Cyber Hub, Tower D, DLF Cyber City, Gurugram 122002",
-    hours: "Mon–Fri · 10:00 – 19:00",
+    address: "Delhi, India",
+    hours: "Mon–Fri · 10:00 – 6:00",
   },
 ];

@@ -36,3 +36,5 @@ env:
       - RUNTIME
   - variable: ADMIN_PASSWORD
     secret: ADMIN_PASSWORD
+  - variable: GOOGLE_MAPS_API_KEY
+    secret: GOOGLE_MAPS_API_KEY

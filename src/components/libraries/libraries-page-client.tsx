@@ -10,6 +10,8 @@ import {
 import { LibraryCard } from "@/components/libraries/library-card";
 import { LibraryCta } from "@/components/libraries/library-cta";
 import { Library } from "@/lib/data/libraries";
+import { LocationSearch } from "@/components/shared/location-search";
+import { distanceKm, formatDistance, Coordinates } from "@/lib/geo";
 
 export function LibrariesPageClient({
   libraries,
@@ -21,16 +23,27 @@ export function LibrariesPageClient({
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState<LibrarySort>("recommended");
+  const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
+  const [locationLabel, setLocationLabel] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
-    let result = libraries.filter((lib) => {
-      const matchesCategory = category === "All" || lib.tags.includes(category);
-      const matchesSearch =
-        search.trim() === "" ||
-        lib.name.toLowerCase().includes(search.toLowerCase()) ||
-        lib.area.toLowerCase().includes(search.toLowerCase());
-      return matchesCategory && matchesSearch;
-    });
+    let result = libraries
+      .filter((lib) => {
+        const matchesCategory =
+          category === "All" || lib.tags.includes(category);
+        const matchesSearch =
+          search.trim() === "" ||
+          lib.name.toLowerCase().includes(search.toLowerCase()) ||
+          lib.area.toLowerCase().includes(search.toLowerCase());
+        return matchesCategory && matchesSearch;
+      })
+      .map((lib) => ({
+        ...lib,
+        computedDistanceKm:
+          userLocation && lib.location
+            ? distanceKm(userLocation, lib.location)
+            : undefined,
+      }));
 
     switch (sort) {
       case "price-low":
@@ -44,7 +57,7 @@ export function LibrariesPageClient({
         break;
     }
     return result;
-  }, [libraries, search, category, sort]);
+  }, [libraries, search, category, sort, userLocation]);
 
   return (
     <>
@@ -61,6 +74,14 @@ export function LibrariesPageClient({
               categories={categories}
             />
           </div>
+          <div className="mb-4">
+            <LocationSearch
+              onLocationChange={(coords, label) => {
+                setUserLocation(coords);
+                setLocationLabel(label);
+              }}
+            />
+          </div>
 
           <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
             Showing
@@ -72,7 +93,16 @@ export function LibrariesPageClient({
           <div className="mt-6 grid gap-5 sm:grid-cols-2">
             <AnimatePresence mode="popLayout">
               {filtered.map((lib, i) => (
-                <LibraryCard key={lib.id} library={lib} index={i} />
+                <LibraryCard
+                  key={lib.id}
+                  library={lib}
+                  index={i}
+                  distanceOverride={
+                    lib.computedDistanceKm != null
+                      ? formatDistance(lib.computedDistanceKm)
+                      : undefined
+                  }
+                />
               ))}
             </AnimatePresence>
           </div>

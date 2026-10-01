@@ -10,6 +10,7 @@
   --color-muted-foreground: hsl(var(--muted-foreground));
   --color-accent: hsl(var(--accent));
   --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-accent-secondary: hsl(var(--accent-secondary));
 
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
@@ -19,14 +20,15 @@
 
 /* src/app/globals.css — replace the :root block */
 :root {
-  --background: 0 0% 100%;
-  --foreground: 0 0% 7%;
-  --surface: 140 12% 97%;
-  --border: 140 8% 89%;
-  --border-strong: 140 6% 78%;
-  --muted-foreground: 0 0% 40%;
-  --accent: 142 68% 29%;
-  --primary-foreground: 0 0% 100%;
+  --background: 60 20% 96%; /* Warm Off-White #F5F4EF */
+  --foreground: 200 8% 8%; /* Deep Graphite #111315 */
+  --surface: 60 15% 93%;
+  --border: 60 8% 85%;
+  --border-strong: 60 6% 72%;
+  --muted-foreground: 200 4% 42%;
+  --accent: 78 88% 58%; /* Electric Lime #B8F23D */
+  --accent-secondary: 226 98% 66%; /* Cool Blue #4D7CFE */
+  --primary-foreground: 60 20% 96%;
 }
 
 @layer base {

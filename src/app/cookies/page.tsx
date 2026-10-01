@@ -12,7 +12,7 @@ export default function CookiesPage() {
           Last updated: September 2026
         </p>
 
-        <div className="mt-8 space-y-6 text-[14.5px] leading-relaxed text-foreground/85">
+        <div className="mt-8 space-y-7 text-[14.5px] leading-relaxed text-foreground/85">
           <div>
             <h2 className="text-[17px] font-semibold text-foreground">
               What we use
@@ -26,11 +26,13 @@ export default function CookiesPage() {
 
           <div>
             <h2 className="text-[17px] font-semibold text-foreground">
-              Firebase
+              Firebase and Google services
             </h2>
             <p className="mt-2">
-              Our authentication and hosting provider, Google Firebase, may set
-              cookies necessary for account security and session management.
+              Our authentication, hosting and location-search providers (Google
+              Firebase and Google Maps) may set cookies necessary for account
+              security, session management and location features you actively
+              use.
             </p>
           </div>
 
@@ -40,8 +42,21 @@ export default function CookiesPage() {
             </h2>
             <p className="mt-2">
               You can control or delete cookies through your browser settings.
-              Disabling essential cookies may prevent you from staying signed
-              in.
+              Disabling essential cookies may prevent you from staying signed in
+              or using location-based search.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-[17px] font-semibold text-foreground">
+              Questions
+            </h2>
+            <p className="mt-2">
+              Reach us at{" "}
+              <a href="mailto:support@gymbym.com" className="underline">
+                support@gymbym.com
+              </a>{" "}
+              for anything related to cookies or tracking on Gymbym.
             </p>
           </div>
         </div>

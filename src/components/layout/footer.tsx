@@ -25,8 +25,8 @@ export function Footer() {
           <div>
             <Logo />
             <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-muted-foreground">
-              One key. Hundreds of premium studios. Train wherever you are — no
-              memberships, no lock-ins.
+              One membership. Access gyms across Delhi — no memberships, no
+              lock-ins.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               <a
@@ -50,7 +50,7 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col-reverse items-start justify-between gap-4 border-t border-border pt-6 text-[12px] text-muted-foreground md:flex-row md:items-center">
-          <p>© 2026 Gymbym. Crafted in Bengaluru.</p>
+          <p>© 2026 Gymbym. Made in Delhi.</p>{" "}
           <div className="flex gap-5">
             <Link href="/privacy" className="hover:text-foreground">
               Privacy

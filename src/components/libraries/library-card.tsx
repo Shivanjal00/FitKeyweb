@@ -11,9 +11,11 @@ import Link from "next/link";
 export function LibraryCard({
   library,
   index,
+  distanceOverride,
 }: {
   library: Library;
   index: number;
+  distanceOverride?: string;
 }) {
   return (
     <motion.div
@@ -58,7 +60,9 @@ export function LibraryCard({
           <div className="p-5">
             <div className="flex items-center gap-1 text-[12.5px] text-muted-foreground">
               <MapPin className="h-3.5 w-3.5" /> {library.area}
-              {library.distance ? ` · ${library.distance}` : ""}
+              {distanceOverride || library.distance
+                ? ` · ${distanceOverride || library.distance}`
+                : ""}{" "}
             </div>
             <h3 className="mt-1 text-[17px] font-semibold text-foreground">
               {library.name}

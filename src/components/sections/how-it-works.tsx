@@ -1,7 +1,7 @@
 "use client";
 
 // src/components/sections/how-it-works.tsx
-import { Search, CalendarCheck, DoorOpen } from "lucide-react";
+import { Search, CreditCard, QrCode, Dumbbell } from "lucide-react";
 import { Reveal } from "@/components/effects/reveal";
 import { FeatureBlock } from "@/components/sections/feature-block";
 
@@ -14,13 +14,11 @@ export function HowItWorks() {
             How it works
           </span>
           <h2 className="mt-4 max-w-2xl text-[34px] font-semibold leading-[1.05] tracking-tight text-foreground md:text-[48px]">
-            From &quot;I should work out&quot; to &quot;just did&quot; — in
-            three taps.
+            Find, subscribe, check in, train.
           </h2>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-            We built Gymbym so the friction between deciding to train and
-            actually training disappears. No signup fees, no monthly minimum —
-            just show up.
+            No separate gym memberships, no long-term lock-in — just a simple
+            flow that gets you training.
           </p>
         </Reveal>
 
@@ -28,39 +26,51 @@ export function HowItWorks() {
           <FeatureBlock
             index="01"
             icon={Search}
-            title="Discover nearby"
-            description="Browse curated studios around you — filter by category, distance and price."
+            title="Find"
+            description="Search gyms around you — filter by area, category and amenities."
             bullets={[
-              "Real-time availability",
-              "Editorial photos, not stock",
-              "Honest reviews from real members",
+              "Real, verified gym listings",
+              "Actual photos of the space",
+              "Honest availability",
             ]}
             image="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1400&q=80"
           />
           <FeatureBlock
             index="02"
-            icon={CalendarCheck}
-            title="Unlock a pass"
-            description="Pick a day, week or month pass. Pay in seconds via UPI, card or wallet."
+            icon={CreditCard}
+            title="Subscribe"
+            description="Choose your Gymbym plan. Pay in seconds via UPI, card or wallet."
             bullets={[
               "No joining fees",
               "Cancel anytime",
-              "Instant confirmation",
+              "Transparent pricing",
             ]}
             image="https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1400&q=80"
             reverse
           />
           <FeatureBlock
             index="03"
-            icon={DoorOpen}
-            title="Walk in and train"
-            description="Show your digital QR pass at the studio. Get in, no repeat, anywhere."
+            icon={QrCode}
+            title="Check in"
+            description="Use your Gymbym pass at the gym. Flash the code, you're in."
             bullets={[
-              "Works offline once loaded",
+              "Digital check-in",
               "No printed passes needed",
-              "Front desk scans in seconds",
+              "Works across participating gyms",
             ]}
             image="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1400&q=80"
+          />
+          <FeatureBlock
+            index="04"
+            icon={Dumbbell}
+            title="Train"
+            description="Workout without the usual membership hassle."
+            bullets={[
+              "No gym-hopping paperwork",
+              "Same subscription, any partner gym",
+              "Just show up",
+            ]}
+            image="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1400&q=80"
           />
         </div>
       </div>

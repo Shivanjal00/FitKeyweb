@@ -18,6 +18,7 @@ export interface Gym {
   gallery?: string[];
   hours?: string;
   image: string;
+  location?: { lat: number; lng: number };
   open: boolean;
   phone?: string;
   plans: GymPlan[];
@@ -54,6 +55,12 @@ export async function getGyms(): Promise<Gym[]> {
       reviews: data.reviews,
       tags: data.tags ?? [],
       trainer: data.trainer,
+      location: data.location
+        ? {
+            lat: data.location.latitude ?? data.location.lat,
+            lng: data.location.longitude ?? data.location.lng,
+          }
+        : undefined,
     };
   });
 }
@@ -89,5 +96,11 @@ export async function getGymById(id: string): Promise<Gym | null> {
     reviews: data.reviews,
     tags: data.tags ?? [],
     trainer: data.trainer,
+    location: data.location
+      ? {
+          lat: data.location.latitude ?? data.location.lat,
+          lng: data.location.longitude ?? data.location.lng,
+        }
+      : undefined,
   };
 }

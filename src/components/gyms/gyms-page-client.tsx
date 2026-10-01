@@ -8,6 +8,9 @@ import { GymCard } from "@/components/gyms/gym-card";
 import { StudioCta } from "@/components/gyms/studio-cta";
 import { Gym } from "@/lib/data/gyms";
 
+import { LocationSearch } from "@/components/shared/location-search";
+import { distanceKm, formatDistance, Coordinates } from "@/lib/geo";
+
 export function GymsPageClient({
   gyms,
   categories,
@@ -19,22 +22,39 @@ export function GymsPageClient({
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState<GymSort>("recommended");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
+  const [locationLabel, setLocationLabel] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 200);
     return () => clearTimeout(timer);
   }, [search]);
   const filtered = useMemo(() => {
-    let result = gyms.filter((gym) => {
-      const matchesCategory = category === "All" || gym.category === category;
-      const matchesSearch =
-        debouncedSearch.trim() === "" ||
-        gym.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-        gym.area.toLowerCase().includes(debouncedSearch.toLowerCase());
-      return matchesCategory && matchesSearch;
-    });
+    let result = gyms
+      .filter((gym) => {
+        const matchesCategory = category === "All" || gym.category === category;
+        const matchesSearch =
+          debouncedSearch.trim() === "" ||
+          gym.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+          gym.area.toLowerCase().includes(debouncedSearch.toLowerCase());
+        return matchesCategory && matchesSearch;
+      })
+      .map((gym) => ({
+        ...gym,
+        computedDistanceKm:
+          userLocation && gym.location
+            ? distanceKm(userLocation, gym.location)
+            : undefined,
+      }));
 
     switch (sort) {
+      case "nearest":
+        result = [...result].sort((a, b) => {
+          if (a.computedDistanceKm == null) return 1;
+          if (b.computedDistanceKm == null) return -1;
+          return a.computedDistanceKm - b.computedDistanceKm;
+        });
+        break;
       case "price-low":
         result = [...result].sort((a, b) => a.price - b.price);
         break;
@@ -52,6 +72,14 @@ export function GymsPageClient({
       <section className="bg-background">
         <div className="mx-auto max-w-7xl px-5 py-12 md:px-8">
           <div className="max-w-xl">
+            <div className="mb-4">
+              <LocationSearch
+                onLocationChange={(coords, label) => {
+                  setUserLocation(coords);
+                  setLocationLabel(label);
+                }}
+              />
+            </div>
             <GymFilters
               search={search}
               setSearch={setSearch}
@@ -73,7 +101,16 @@ export function GymsPageClient({
           <div className="mt-6 grid gap-5 sm:grid-cols-2">
             <AnimatePresence mode="popLayout">
               {filtered.map((gym, i) => (
-                <GymCard key={gym.id} gym={gym} index={i} />
+                <GymCard
+                  key={gym.id}
+                  gym={gym}
+                  index={i}
+                  distanceOverride={
+                    gym.computedDistanceKm != null
+                      ? formatDistance(gym.computedDistanceKm)
+                      : undefined
+                  }
+                />
               ))}
             </AnimatePresence>
           </div>

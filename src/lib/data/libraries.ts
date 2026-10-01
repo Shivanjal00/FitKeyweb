@@ -15,6 +15,7 @@ export interface Library {
   distance?: string;
   hours?: string;
   image: string;
+  location?: { lat: number; lng: number };
   open: boolean;
   plans: LibraryPlan[];
   price: number;
@@ -36,6 +37,12 @@ export async function getLibraries(): Promise<Library[]> {
       about: data.about,
       area: data.area ?? "",
       distance: data.distance || undefined,
+      location: data.location
+        ? {
+            lat: data.location.latitude ?? data.location.lat,
+            lng: data.location.longitude ?? data.location.lng,
+          }
+        : undefined,
       hours: data.hours,
       image: data.image ?? "",
       open: data.open ?? false,
@@ -66,6 +73,12 @@ export async function getLibraryById(id: string): Promise<Library | null> {
     about: data.about,
     area: data.area ?? "",
     distance: data.distance || undefined,
+    location: data.location
+      ? {
+          lat: data.location.latitude ?? data.location.lat,
+          lng: data.location.longitude ?? data.location.lng,
+        }
+      : undefined,
     hours: data.hours,
     image: data.image ?? "",
     open: data.open ?? false,

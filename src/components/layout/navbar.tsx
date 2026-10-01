@@ -13,10 +13,10 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/gyms", label: "Gyms" },
+  { href: "/gyms", label: "Find a Gym" },
   { href: "/libraries", label: "Libraries" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/pricing", label: "Membership" },
+  { href: "/partner", label: "For Gym Owners" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -94,9 +94,9 @@ export function Navbar() {
               </Link>
               <Link
                 href="/login"
-                className="group inline-flex items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-[13px] font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
+                className="group inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-[13px] font-semibold text-foreground transition-transform hover:-translate-y-0.5"
               >
-                Get started
+                Get the app
                 <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </>
