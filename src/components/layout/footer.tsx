@@ -13,8 +13,7 @@ const companyLinks = [
 ];
 const accountLinks = [
   { href: "/login", label: "Sign in" },
-  { href: "/onboarding", label: "Get started" },
-  { href: "/home", label: "Open app" },
+  { href: "/partner", label: "List your gym" },
 ];
 
 export function Footer() {
@@ -25,22 +24,16 @@ export function Footer() {
           <div>
             <Logo />
             <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-muted-foreground">
-              One membership. Access gyms across Delhi — no memberships, no
-              lock-ins.
+              One membership. Access participating gyms across Delhi, with no
+              long-term lock-ins.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
-              <a
-                href="#"
-                className="rounded-full border border-border bg-background px-4 py-2 text-[12px] font-medium hover:border-foreground"
-              >
-                iOS App
-              </a>
-              <a
-                href="#"
-                className="rounded-full border border-border bg-background px-4 py-2 text-[12px] font-medium hover:border-foreground"
-              >
-                Android App
-              </a>
+              <span className="rounded-full border border-dashed border-border-strong px-4 py-2 text-[12px] font-medium text-muted-foreground">
+                iOS app · coming soon
+              </span>
+              <span className="rounded-full border border-dashed border-border-strong px-4 py-2 text-[12px] font-medium text-muted-foreground">
+                Android app · coming soon
+              </span>
             </div>
           </div>
 
@@ -50,7 +43,7 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col-reverse items-start justify-between gap-4 border-t border-border pt-6 text-[12px] text-muted-foreground md:flex-row md:items-center">
-          <p>© 2026 Gymbym. Made in Delhi.</p>{" "}
+          <p>© 2026 Gymbym. Made in Delhi.</p>
           <div className="flex gap-5">
             <Link href="/privacy" className="hover:text-foreground">
               Privacy
@@ -77,7 +70,7 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <h4 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+      <h4 className="text-[12px] font-semibold text-foreground">
         {title}
       </h4>
       <ul className="mt-4 space-y-2.5">

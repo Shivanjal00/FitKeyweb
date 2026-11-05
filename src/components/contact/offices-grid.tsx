@@ -16,7 +16,7 @@ export function OfficesGrid() {
               <h3 className="text-[17px] font-semibold text-foreground">
                 {office.city}
               </h3>
-              <span className="rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+              <span className="rounded-full border border-border bg-background px-2.5 py-1 text-[11.5px] font-medium text-muted-foreground">
                 {office.tag}
               </span>
             </div>

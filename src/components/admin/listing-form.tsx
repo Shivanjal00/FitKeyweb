@@ -52,7 +52,7 @@ export function ListingForm() {
   const [phone, setPhone] = useState("");
   const [trainer, setTrainer] = useState("");
   const [seats, setSeats] = useState("");
-  const [rating, setRating] = useState("4.5");
+  const [rating, setRating] = useState(""); // blank = no rating yet ("New")
   const [open, setOpen] = useState(true);
   const [images, setImages] = useState<string[]>([]);
   const [plans, setPlans] = useState<Plan[]>([
@@ -110,7 +110,7 @@ export function ListingForm() {
     setPhone("");
     setTrainer("");
     setSeats("");
-    setRating("4.5");
+    setRating("");
     setOpen(true);
     setImages([]);
     setPlans([{ name: "Daily Pass", price: "" }]);
@@ -138,6 +138,17 @@ export function ListingForm() {
       return;
     }
 
+    if (!is24h && (!openTime || !closeTime)) {
+      setErrorMsg("Set opening and closing time, or tick “Open 24 hours”.");
+      return;
+    }
+
+    const ratingNum = Number(rating);
+    if (rating.trim() && (Number.isNaN(ratingNum) || ratingNum < 0 || ratingNum > 5)) {
+      setErrorMsg("Rating must be between 0 and 5 (or leave it blank).");
+      return;
+    }
+
     const hoursText = is24h
       ? "24 hours"
       : `${formatTime12h(openTime)} – ${formatTime12h(closeTime)}`;
@@ -150,8 +161,8 @@ export function ListingForm() {
       image: images[0] || "",
       open,
       plans: cleanPlans,
-      price: cleanPlans[0].price,
-      rating: Number(rating) || 0,
+      price: Math.min(...cleanPlans.map((p) => p.price)),
+      rating: rating.trim() ? ratingNum : 0,
       tags,
       ...(location
         ? {
@@ -206,7 +217,9 @@ export function ListingForm() {
   if (status === "success") {
     return (
       <div className="mt-24 flex flex-col items-center rounded-3xl border border-border bg-surface p-10 text-center">
-        <CheckCircle2 className="h-10 w-10 text-accent" />
+        <span className="icon-badge h-14 w-14 rounded-full">
+          <CheckCircle2 className="h-7 w-7" />
+        </span>
         <h2 className="mt-4 text-[19px] font-semibold text-foreground">
           Listing added
         </h2>
@@ -357,13 +370,19 @@ export function ListingForm() {
         />
       )}
 
-      <Field
-        label="Rating"
-        value={rating}
-        onChange={setRating}
-        placeholder="4.5"
-        type="number"
-      />
+      <div>
+        <Field
+          label="Rating (optional)"
+          value={rating}
+          onChange={setRating}
+          placeholder="Leave blank for a new listing"
+          type="number"
+        />
+        <p className="mt-1.5 text-[11.5px] text-muted-foreground">
+          Blank shows a “New” badge on the site. Only enter a rating you can
+          back up with real reviews.
+        </p>
+      </div>
 
       <label className="flex items-center gap-2 text-[13.5px] text-foreground">
         <input
@@ -403,7 +422,7 @@ export function ListingForm() {
                 <button
                   type="button"
                   onClick={() => removePlan(i)}
-                  className="grid w-10 shrink-0 place-items-center rounded-xl border border-border text-muted-foreground hover:border-red-400 hover:text-red-500"
+                  className="grid w-10 shrink-0 place-items-center rounded-xl border border-border text-muted-foreground hover:border-red-400 hover:text-red-600"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -420,7 +439,7 @@ export function ListingForm() {
         </button>
       </div>
 
-      {errorMsg && <p className="text-[13px] text-red-500">{errorMsg}</p>}
+      {errorMsg && <p className="text-[13px] text-red-600">{errorMsg}</p>}
 
       <button
         type="submit"

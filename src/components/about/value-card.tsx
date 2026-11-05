@@ -28,8 +28,8 @@ export function ValueCard({
   return (
     <Reveal delay={delay}>
       <TiltCard className="h-full rounded-3xl border border-border bg-surface p-7">
-        <div className="grid h-10 w-10 place-items-center rounded-full border border-accent/30 text-accent">
-          <Icon className="h-4.5 w-4.5" strokeWidth={1.8} />
+        <div className="icon-badge h-11 w-11 rounded-full">
+          <Icon className="h-[18px] w-[18px]" strokeWidth={2} />
         </div>
         <h3 className="mt-5 text-[16px] font-semibold text-foreground">
           {title}

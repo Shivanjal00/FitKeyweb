@@ -2,6 +2,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProdDb, getDevDb } from "@/lib/firebase-admin";
 import { GeoPoint } from "firebase-admin/firestore";
+import { ADMIN_COOKIE, isAdminSession } from "@/lib/admin-auth";
+
 function slugify(input: string) {
   return input
     .toLowerCase()
@@ -11,12 +13,22 @@ function slugify(input: string) {
 }
 
 export async function POST(req: NextRequest) {
-  const session = req.cookies.get("fk_admin_session")?.value;
-  if (!session || session !== process.env.ADMIN_PASSWORD) {
+  if (!isAdminSession(req.cookies.get(ADMIN_COOKIE)?.value)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const body = await req.json();
+  interface ListingPayload {
+    name?: string;
+    area?: string;
+    location?: { lat?: number; lng?: number };
+    [key: string]: unknown;
+  }
+  let body: { type?: string; data?: ListingPayload };
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  }
   const { type, data } = body;
 
   if (type !== "gym" && type !== "library") {
@@ -33,9 +45,10 @@ export async function POST(req: NextRequest) {
   const collectionName = type === "gym" ? "gyms" : "libraries";
 
   // Convert plain {lat, lng} into a real Firestore GeoPoint
-  const payload = { ...data };
-  if (payload.location?.lat != null && payload.location?.lng != null) {
-    payload.location = new GeoPoint(payload.location.lat, payload.location.lng);
+  const { location, ...rest } = data;
+  const payload: Record<string, unknown> = { ...rest };
+  if (location?.lat != null && location?.lng != null) {
+    payload.location = new GeoPoint(location.lat, location.lng);
   }
 
   try {

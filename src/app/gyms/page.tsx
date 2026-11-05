@@ -1,8 +1,9 @@
 // src/app/gyms/page.tsx
 import { MapPin } from "lucide-react";
 import { Reveal } from "@/components/effects/reveal";
-import { getGyms, getGymCategories } from "@/lib/data/gyms";
+import { getGyms, getGymCategories, Gym } from "@/lib/data/gyms";
 import { GymsPageClient } from "@/components/gyms/gyms-page-client";
+
 export const metadata = {
   title: "Gyms",
   description:
@@ -12,28 +13,36 @@ export const metadata = {
 export const revalidate = 60;
 
 export default async function GymsPage() {
-  const gyms = await getGyms();
+  let gyms: Gym[] = [];
+  try {
+    gyms = await getGyms();
+  } catch (err) {
+    console.error("Failed to load gyms:", err);
+  }
   const categories = getGymCategories(gyms);
 
   return (
     <>
-      <section className="border-b border-border bg-gradient-to-b from-surface to-background">
-        <div className="mx-auto max-w-7xl px-5 pb-10 pt-24 md:px-8 md:pt-32">
+      <section className="hero-wash border-b border-border">
+        <div className="mx-auto max-w-7xl px-5 pb-12 pt-24 md:px-8 md:pb-14 md:pt-32">
           <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-              <MapPin className="h-3 w-3" /> Delhi NCR · {gyms.length}+ places
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1.5 text-[12px] font-medium text-muted-foreground">
+              <MapPin className="h-3.5 w-3.5" />
+              Delhi NCR
+              {gyms.length > 0 &&
+                ` · ${gyms.length} ${gyms.length === 1 ? "studio" : "studios"} listed`}
             </span>
           </Reveal>
           <Reveal delay={0.08}>
-            <h1 className="mt-6 max-w-2xl text-[38px] font-semibold leading-[1.05] tracking-tight text-foreground md:text-[54px]">
-              Studios worth{" "}
-              <span className="italic text-accent">the walk over.</span>
+            <h1 className="mt-6 max-w-2xl text-[40px] font-semibold leading-[1.05] tracking-tight text-foreground md:text-[56px]">
+              Studios worth <span className="mark-lime">the walk over.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.16}>
             <p className="mt-5 max-w-xl text-[15.5px] leading-relaxed text-muted-foreground md:text-[16.5px]">
               Every space here is vetted for quality, equipment and coaching.
-              Browse, favourite, and unlock a pass — all in a couple of taps.
+              Search by area, compare passes and unlock one in a couple of
+              taps.
             </p>
           </Reveal>
         </div>

@@ -21,7 +21,7 @@ export function TrustBadges() {
                 key={badge}
                 className="flex items-center gap-1.5 text-[13.5px] font-medium text-foreground/80"
               >
-                <CheckCircle2 className="h-4 w-4 text-accent-secondary" />{" "}
+                <CheckCircle2 className="h-4 w-4 shrink-0 text-accent-secondary" />
                 {badge}
               </span>
             ))}

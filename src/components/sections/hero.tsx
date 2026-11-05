@@ -14,7 +14,7 @@ export function Hero() {
         <motion.div
           animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.7, 0.5] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-accent/20 blur-3xl"
+          className="absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-accent/25 blur-3xl"
         />
       </div>
 
@@ -22,7 +22,7 @@ export function Hero() {
         <Reveal>
           <h1 className="max-w-3xl text-[44px] font-semibold leading-[1.02] tracking-tight text-foreground md:text-[68px]">
             One membership.{" "}
-            <span className="italic text-accent-secondary">Multiple gyms.</span>
+            <span className="mark-lime">Multiple gyms.</span>
           </h1>
         </Reveal>
 
@@ -38,7 +38,7 @@ export function Hero() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/gyms"
-              className="group inline-flex items-center gap-1.5 rounded-full bg-foreground px-6 py-3.5 text-[14px] font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-1.5 rounded-full bg-foreground px-6 py-3.5 text-[14px] font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
             >
               Explore gyms
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -65,7 +65,7 @@ export function Hero() {
           <div className="relative aspect-[16/8] overflow-hidden rounded-[32px] border border-border md:aspect-[16/6]">
             <Image
               src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1600&q=80"
-              alt="Gym floor"
+              alt="Lifter gripping a barbell on a gym floor"
               fill
               priority
               sizes="100vw"

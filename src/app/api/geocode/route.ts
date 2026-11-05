@@ -6,6 +6,9 @@ export async function GET(req: NextRequest) {
   if (!address?.trim()) {
     return NextResponse.json({ error: "Missing address" }, { status: 400 });
   }
+  if (address.length > 120) {
+    return NextResponse.json({ error: "Address too long" }, { status: 400 });
+  }
 
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
   if (!apiKey) {
@@ -20,6 +23,7 @@ export async function GET(req: NextRequest) {
       address: `${address}, Delhi, India`,
       key: apiKey,
       region: "in",
+      components: "country:IN",
     });
     const res = await fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?${params}`,

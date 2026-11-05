@@ -1,11 +1,11 @@
 // src/app/login/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { Loader2, Globe, Dumbbell, Users } from "lucide-react";
+import { Loader2, Dumbbell, Users } from "lucide-react";
 import { auth, db } from "@/lib/firebase";
 import { useAuth, UserRole } from "@/contexts/auth-context";
 import { Reveal } from "@/components/effects/reveal";
@@ -35,8 +35,15 @@ export default function LoginPage() {
     setBusy(true);
     try {
       await signInWithPopup(auth, new GoogleAuthProvider());
-    } catch {
-      setError("Google sign-in failed. Try again.");
+    } catch (err) {
+      const code = (err as { code?: string })?.code;
+      // Closing the popup is not an error worth shouting about.
+      if (
+        code !== "auth/popup-closed-by-user" &&
+        code !== "auth/cancelled-popup-request"
+      ) {
+        setError("Google sign-in failed. Please try again.");
+      }
     } finally {
       setBusy(false);
     }
@@ -78,19 +85,16 @@ export default function LoginPage() {
     }
   }
 
-  if (
-    needsProfile &&
-    formName === "" &&
-    formEmail === "" &&
-    formPhone === "" &&
-    user
-  ) {
-    setTimeout(() => {
+  // Pre-fill once from the Google account (this used to run during render).
+  const prefilled = useRef(false);
+  useEffect(() => {
+    if (needsProfile && user && !prefilled.current) {
+      prefilled.current = true;
       setFormName(user.displayName || "");
       setFormEmail(user.email || "");
       setFormPhone(user.phoneNumber || "");
-    }, 0);
-  }
+    }
+  }, [needsProfile, user]);
 
   if (needsProfile) {
     const emailLocked = !!user?.email;
@@ -138,7 +142,7 @@ export default function LoginPage() {
             />
 
             <div>
-              <label className="text-[12px] font-semibold uppercase tracking-wide text-muted-foreground">
+              <label className="text-[12px] font-semibold text-foreground">
                 I am a
               </label>
               <div className="mt-2 grid grid-cols-2 gap-3">
@@ -169,7 +173,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {error && <p className="text-[13px] text-red-500">{error}</p>}
+            {error && <p className="text-[13px] text-red-600">{error}</p>}
 
             <button
               type="submit"
@@ -200,17 +204,22 @@ export default function LoginPage() {
       </Reveal>
 
       <Reveal delay={0.1}>
-        <div className="mt-8 rounded-3xl border border-border bg-surface p-6">
+        <div className="mt-8 rounded-3xl border border-border bg-surface p-6 shadow-soft">
           <button
             onClick={handleGoogleSignIn}
             disabled={busy}
             className="flex w-full items-center justify-center gap-2 rounded-full border border-border bg-background px-6 py-3 text-[14px] font-semibold text-foreground transition-colors hover:border-foreground/40 disabled:opacity-70"
           >
-            <Globe className="h-4 w-4" /> Continue with Google
+            {busy ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <GoogleG />
+            )}
+            Continue with Google
           </button>
 
           {error && (
-            <p className="mt-4 text-center text-[13px] text-red-500">{error}</p>
+            <p className="mt-4 text-center text-[13px] text-red-600">{error}</p>
           )}
         </div>
       </Reveal>
@@ -242,7 +251,7 @@ function Field({
 }) {
   return (
     <div>
-      <label className="text-[12px] font-semibold uppercase tracking-wide text-muted-foreground">
+      <label className="text-[12px] font-semibold text-foreground">
         {label}{" "}
         {locked && (
           <span className="normal-case text-muted-foreground/70">
@@ -263,5 +272,28 @@ function Field({
         }`}
       />
     </div>
+  );
+}
+
+function GoogleG() {
+  return (
+    <svg viewBox="0 0 48 48" className="h-[18px] w-[18px]" aria-hidden="true">
+      <path
+        fill="#EA4335"
+        d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+      />
+      <path
+        fill="#4285F4"
+        d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M10.53 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.99 23.99 0 0 0 0 24c0 3.87.92 7.52 2.56 10.78l7.97-6.19z"
+      />
+      <path
+        fill="#34A853"
+        d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+      />
+    </svg>
   );
 }

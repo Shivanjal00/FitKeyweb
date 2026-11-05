@@ -37,7 +37,7 @@ export function AdminGate({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     <div className="mt-24 rounded-3xl border border-border bg-surface p-8 text-center">
-      <div className="mx-auto grid h-12 w-12 place-items-center rounded-full border border-accent/30 text-accent">
+      <div className="icon-badge mx-auto h-12 w-12 rounded-full">
         <Lock className="h-5 w-5" />
       </div>
       <h1 className="mt-4 text-[20px] font-semibold text-foreground">
@@ -56,7 +56,7 @@ export function AdminGate({ onSuccess }: { onSuccess: () => void }) {
           autoFocus
           className="w-full rounded-full border border-border bg-background px-4 py-3 text-center text-[14px] text-foreground focus:border-foreground focus:outline-none"
         />
-        {error && <p className="text-[12.5px] text-red-500">{error}</p>}
+        {error && <p className="text-[12.5px] text-red-600">{error}</p>}
         <button
           type="submit"
           disabled={loading}

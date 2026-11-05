@@ -1,6 +1,7 @@
 // src/components/contact/support-sidebar.tsx
 "use client";
 
+import Link from "next/link";
 import { Clock, Building2, ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/effects/reveal";
 import { TiltCard } from "@/components/effects/tilt-card";
@@ -11,7 +12,7 @@ export function SupportSidebar() {
       <Reveal>
         <TiltCard className="rounded-3xl border border-border bg-surface p-6">
           <div className="flex items-center gap-2.5">
-            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-accent/30 text-accent">
+            <span className="icon-badge h-9 w-9 shrink-0 rounded-full">
               <Clock className="h-3.5 w-3.5" />
             </span>
             <div>
@@ -25,7 +26,7 @@ export function SupportSidebar() {
           </div>
           <div className="mt-4 grid grid-cols-2 gap-3">
             <div className="rounded-xl border border-border bg-background p-3">
-              <div className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+              <div className="text-[11.5px] font-medium text-muted-foreground">
                 Weekdays
               </div>
               <div className="mt-1 text-[14px] font-semibold text-foreground">
@@ -33,7 +34,7 @@ export function SupportSidebar() {
               </div>
             </div>
             <div className="rounded-xl border border-border bg-background p-3">
-              <div className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+              <div className="text-[11.5px] font-medium text-muted-foreground">
                 Saturday
               </div>
               <div className="mt-1 text-[14px] font-semibold text-foreground">
@@ -51,15 +52,21 @@ export function SupportSidebar() {
             <span className="text-[14px] font-semibold">Partner a studio</span>
           </div>
           <p className="mt-3 text-[13px] leading-relaxed text-primary-foreground/70">
-            Run a studio and want to be listed? Get thousands of new visits a
-            month with zero listing fees.
+            Run a studio and want to be listed? Tell us about your space and
+            we’ll get you set up.
           </p>
+          <Link
+            href="/partner"
+            className="mt-4 inline-flex items-center gap-1 text-[13px] font-semibold text-accent"
+          >
+            Become a partner
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </Link>
           <a
             href="mailto:shivanjal@gymbym.com"
-            className="mt-4 inline-flex items-center gap-1 text-[13px] font-semibold"
+            className="mt-2 block text-[12.5px] text-primary-foreground/70 hover:text-primary-foreground"
           >
-            shivanjal@gymbym.com
-            <ArrowUpRight className="h-3.5 w-3.5" />
+            or write to shivanjal@gymbym.com
           </a>
         </TiltCard>
       </Reveal>

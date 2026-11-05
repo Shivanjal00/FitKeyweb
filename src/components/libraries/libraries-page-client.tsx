@@ -1,8 +1,9 @@
 // src/components/libraries/libraries-page-client.tsx
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import { SearchX } from "lucide-react";
 import {
   LibraryFilters,
   LibrarySort,
@@ -21,20 +22,27 @@ export function LibrariesPageClient({
   categories: string[];
 }) {
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState<LibrarySort>("recommended");
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
   const [locationLabel, setLocationLabel] = useState<string | null>(null);
 
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearch(search), 200);
+    return () => clearTimeout(timer);
+  }, [search]);
+
   const filtered = useMemo(() => {
+    const q = debouncedSearch.trim().toLowerCase();
     let result = libraries
       .filter((lib) => {
         const matchesCategory =
           category === "All" || lib.tags.includes(category);
         const matchesSearch =
-          search.trim() === "" ||
-          lib.name.toLowerCase().includes(search.toLowerCase()) ||
-          lib.area.toLowerCase().includes(search.toLowerCase());
+          q === "" ||
+          lib.name.toLowerCase().includes(q) ||
+          lib.area.toLowerCase().includes(q);
         return matchesCategory && matchesSearch;
       })
       .map((lib) => ({
@@ -46,6 +54,14 @@ export function LibrariesPageClient({
       }));
 
     switch (sort) {
+      // "Nearest" was offered in the dropdown but never implemented here.
+      case "nearest":
+        result = [...result].sort((a, b) => {
+          if (a.computedDistanceKm == null) return 1;
+          if (b.computedDistanceKm == null) return -1;
+          return a.computedDistanceKm - b.computedDistanceKm;
+        });
+        break;
       case "price-low":
         result = [...result].sort((a, b) => a.price - b.price);
         break;
@@ -57,66 +73,96 @@ export function LibrariesPageClient({
         break;
     }
     return result;
-  }, [libraries, search, category, sort, userLocation]);
+  }, [libraries, debouncedSearch, category, sort, userLocation]);
+
+  function handleLocationChange(
+    coords: Coordinates | null,
+    label: string | null,
+  ) {
+    setUserLocation(coords);
+    setLocationLabel(label);
+    if (coords) setSort((s) => (s === "recommended" ? "nearest" : s));
+    else setSort((s) => (s === "nearest" ? "recommended" : s));
+  }
+
+  const hasFilters = search !== "" || category !== "All";
 
   return (
     <>
       <section className="bg-background">
-        <div className="mx-auto max-w-7xl px-5 py-12 md:px-8">
-          <div className="max-w-xl">
-            <LibraryFilters
-              search={search}
-              setSearch={setSearch}
-              category={category}
-              setCategory={setCategory}
-              sort={sort}
-              setSort={setSort}
-              categories={categories}
-            />
-          </div>
-          <div className="mb-4">
-            <LocationSearch
-              onLocationChange={(coords, label) => {
-                setUserLocation(coords);
-                setLocationLabel(label);
-              }}
-            />
-          </div>
+        <div className="mx-auto max-w-7xl px-5 py-8 md:px-8 md:py-10">
+          <LibraryFilters
+            locationSlot={
+              <LocationSearch onLocationChange={handleLocationChange} />
+            }
+            search={search}
+            setSearch={setSearch}
+            category={category}
+            setCategory={setCategory}
+            sort={sort}
+            setSort={setSort}
+            categories={categories}
+          />
 
-          <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-            Showing
-          </p>
-          <p className="mt-1 text-[15px] font-medium text-foreground">
-            {filtered.length} {filtered.length === 1 ? "library" : "libraries"}
-          </p>
-
-          <div className="mt-6 grid gap-5 sm:grid-cols-2">
-            <AnimatePresence mode="popLayout">
-              {filtered.map((lib, i) => (
-                <LibraryCard
-                  key={lib.id}
-                  library={lib}
-                  index={i}
-                  distanceOverride={
-                    lib.computedDistanceKm != null
-                      ? formatDistance(lib.computedDistanceKm)
-                      : undefined
-                  }
-                />
-              ))}
-            </AnimatePresence>
-          </div>
-
-          {filtered.length === 0 && (
-            <div className="mt-16 flex flex-col items-center justify-center rounded-3xl border border-dashed border-border py-20 text-center">
-              <p className="text-[16px] font-medium text-foreground">
-                No libraries match your search
+          <div className="mt-8">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <p className="text-[15px] font-semibold text-foreground">
+                {filtered.length}{" "}
+                {filtered.length === 1 ? "library" : "libraries"}
+                {locationLabel && (
+                  <span className="font-normal text-muted-foreground">
+                    {" "}
+                    · sorted near {locationLabel}
+                  </span>
+                )}
               </p>
-              <p className="mt-1 text-[14px] text-muted-foreground">
-                Try a different area, category or keyword.
-              </p>
+              {hasFilters && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearch("");
+                    setCategory("All");
+                  }}
+                  className="text-[13px] font-medium text-foreground underline underline-offset-4 hover:opacity-70"
+                >
+                  Clear filters
+                </button>
+              )}
             </div>
-          )}
+
+            <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              <AnimatePresence mode="popLayout">
+                {filtered.map((lib, i) => (
+                  <LibraryCard
+                    key={lib.id}
+                    library={lib}
+                    index={i}
+                    distanceOverride={
+                      lib.computedDistanceKm != null
+                        ? formatDistance(lib.computedDistanceKm)
+                        : undefined
+                    }
+                  />
+                ))}
+              </AnimatePresence>
+            </div>
+
+            {filtered.length === 0 && (
+              <div className="mt-6 flex flex-col items-center justify-center rounded-3xl border border-dashed border-border-strong py-20 text-center">
+                <SearchX className="h-8 w-8 text-muted-foreground" />
+                <p className="mt-4 text-[16px] font-semibold text-foreground">
+                  {libraries.length === 0
+                    ? "Libraries are being added"
+                    : "No libraries match your search"}
+                </p>
+                <p className="mt-1 max-w-xs text-[14px] text-muted-foreground">
+                  {libraries.length === 0
+                    ? "We’re verifying reading rooms across Delhi. Check back very soon."
+                    : "Try a different area, category or keyword."}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 

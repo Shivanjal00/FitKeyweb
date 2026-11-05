@@ -25,14 +25,13 @@ export function FeatureBlock({
 }: FeatureBlockProps) {
   return (
     <div
-      className={`grid items-center gap-10 md:grid-cols-2 md:gap-16 ${
+      className={`group grid items-center gap-10 md:grid-cols-2 md:gap-16 ${
         reverse ? "md:[&>*:first-child]:order-2" : ""
       }`}
     >
       <Reveal>
         <div className="relative">
           <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] border border-border">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <Image
               src={image}
               alt=""

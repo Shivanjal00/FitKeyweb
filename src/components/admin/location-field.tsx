@@ -47,7 +47,7 @@ export function LocationField({
         className="mt-1.5 flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-border bg-background px-4 py-3 text-[13.5px] font-medium text-foreground transition-colors hover:border-foreground/40 disabled:opacity-70"
       >
         {status === "loading" && <Loader2 className="h-4 w-4 animate-spin" />}
-        {status === "done" && <CheckCircle2 className="h-4 w-4 text-accent" />}
+        {status === "done" && <CheckCircle2 className="h-4 w-4 text-success" />}
         {status === "idle" && <MapPin className="h-4 w-4" />}
         {status === "loading" && "Getting your location..."}
         {status === "done" &&

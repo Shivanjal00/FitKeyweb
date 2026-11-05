@@ -48,22 +48,20 @@ const benefits = [
 export default function PartnerPage() {
   return (
     <>
-      <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-surface to-background">
+      <section className="hero-wash relative overflow-hidden border-b border-border">
         <div className="pointer-events-none absolute inset-0 -z-0">
           <div className="absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-accent/20 blur-3xl" />
         </div>
         <div className="relative mx-auto max-w-3xl px-5 pb-16 pt-24 text-center md:px-8 md:pt-32">
           <Reveal>
-            <span className="mx-auto inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="mx-auto inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-[12px] font-medium text-muted-foreground">
               For gym owners
             </span>
           </Reveal>
           <Reveal delay={0.08}>
             <h1 className="mt-6 text-[36px] font-semibold leading-[1.08] tracking-tight text-foreground md:text-[54px]">
               Turn empty gym capacity{" "}
-              <span className="italic text-accent-secondary">
-                into new customers.
-              </span>
+              <span className="mark-lime">into new customers.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.16}>
@@ -75,7 +73,7 @@ export default function PartnerPage() {
           <Reveal delay={0.24}>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
-                href="/contact"
+                href="/contact?subject=partner"
                 className="group inline-flex items-center gap-1.5 rounded-full bg-accent px-6 py-3.5 text-[14px] font-semibold text-foreground transition-transform hover:-translate-y-0.5"
               >
                 Become a Gymbym Partner
@@ -97,8 +95,8 @@ export default function PartnerPage() {
             {benefits.map((b, i) => (
               <Reveal key={b.title} delay={i * 0.08}>
                 <TiltCard className="h-full rounded-3xl border border-border bg-surface p-7">
-                  <div className="grid h-10 w-10 place-items-center rounded-full border border-accent-secondary/30 text-accent-secondary">
-                    <b.icon className="h-4.5 w-4.5" />
+                  <div className="icon-badge h-11 w-11 rounded-full">
+                    <b.icon className="h-[18px] w-[18px]" strokeWidth={2} />
                   </div>
                   <h3 className="mt-5 text-[16px] font-semibold text-foreground">
                     {b.title}
@@ -124,7 +122,7 @@ export default function PartnerPage() {
               revenue.
             </p>
             <Link
-              href="/contact"
+              href="/contact?subject=partner"
               className="mt-8 inline-flex items-center gap-1.5 rounded-full bg-accent px-6 py-3.5 text-[14px] font-semibold text-foreground transition-transform hover:-translate-y-0.5"
             >
               Get in touch

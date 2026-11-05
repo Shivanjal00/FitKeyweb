@@ -1,4 +1,4 @@
-// src/app/contact/page.tsx — replace just the top hero section
+// src/app/contact/page.tsx
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { Reveal } from "@/components/effects/reveal";
@@ -14,23 +14,31 @@ export const metadata = {
     "Get in touch with the Gymbym team for support, partnerships or press inquiries.",
 };
 
-export default function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ subject?: string }>;
+}) {
+  const { subject } = await searchParams;
+  const initialSubject =
+    subject === "partner" ? "Partner a gym" : undefined;
+
   return (
     <>
-      <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-surface to-background">
+      <section className="hero-wash relative overflow-hidden border-b border-border">
         <div className="pointer-events-none absolute inset-0 -z-0">
-          <div className="absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-accent/10 blur-3xl" />
+          <div className="absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-accent/20 blur-3xl" />
         </div>
         <div className="relative mx-auto max-w-3xl px-5 pb-16 pt-24 text-center md:px-8 md:pt-32">
           <Reveal>
-            <span className="mx-auto inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="mx-auto inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1.5 text-[12px] font-medium text-muted-foreground">
               <MessageCircle className="h-3 w-3" /> We&apos;re here to help
             </span>
           </Reveal>
           <Reveal delay={0.08}>
             <h1 className="mt-6 text-[36px] font-semibold leading-[1.08] tracking-tight text-foreground md:text-[54px]">
               Let&apos;s talk.{" "}
-              <span className="italic text-accent">However works best.</span>
+              <span className="mark-lime">However works best.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.16}>
@@ -61,7 +69,7 @@ export default function ContactPage() {
         <div className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
           <div className="grid gap-8 md:grid-cols-[1.6fr_1fr]">
             <Reveal>
-              <ContactForm />
+              <ContactForm initialSubject={initialSubject} />
             </Reveal>
             <SupportSidebar />
           </div>
@@ -75,7 +83,7 @@ export default function ContactPage() {
               Offices
             </span>
             <h2 className="mt-4 text-[30px] font-semibold leading-[1.1] tracking-tight text-foreground md:text-[42px]">
-              Find us across India.
+              Find us in Delhi.
             </h2>
           </Reveal>
           <div className="mt-10">
@@ -91,13 +99,13 @@ export default function ContactPage() {
               Skip the form. Just start training.
             </h2>
             <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-primary-foreground/70">
-              Download the app, unlock hundreds of studios, and book your first
-              session in under a minute.
+              Find a verified studio near you and unlock your first session in
+              a minute.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
-                href="/onboarding"
-                className="rounded-full bg-background px-6 py-3.5 text-[14px] font-semibold text-foreground transition-transform hover:-translate-y-0.5"
+                href="/login"
+                className="rounded-full bg-accent px-6 py-3.5 text-[14px] font-semibold text-foreground transition-transform hover:-translate-y-0.5"
               >
                 Get the app
               </Link>

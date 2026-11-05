@@ -16,7 +16,7 @@ const items = [
   {
     icon: Handshake,
     title: "Partner gyms joining Gymbym",
-    description: "New studios added every week.",
+    description: "Verified gyms are being onboarded now.",
   },
 ];
 
@@ -28,12 +28,12 @@ export function StatsBar() {
           {items.map((item, i) => (
             <Reveal key={item.title} delay={i * 0.08}>
               <div className="flex items-start gap-3">
-                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-primary-foreground/20 text-accent">
-                  <item.icon className="h-4.5 w-4.5" />
+                <div className="icon-badge h-10 w-10 shrink-0 rounded-full">
+                  <item.icon className="h-[18px] w-[18px]" strokeWidth={1.8} />
                 </div>
                 <div>
                   <div className="text-[15px] font-semibold">{item.title}</div>
-                  <div className="mt-0.5 text-[13px] text-primary-foreground/60">
+                  <div className="mt-0.5 text-[13px] text-primary-foreground/70">
                     {item.description}
                   </div>
                 </div>

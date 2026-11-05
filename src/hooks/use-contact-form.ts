@@ -1,4 +1,4 @@
-// src/hooks/use-contact-form.ts — replace entirely
+// src/hooks/use-contact-form.ts
 "use client";
 
 import { useState } from "react";
@@ -9,6 +9,7 @@ interface FormData {
   email: string;
   subject: string;
   message: string;
+  website: string; // honeypot
 }
 
 interface FormErrors {
@@ -19,15 +20,19 @@ interface FormErrors {
 
 type SubmitStatus = "idle" | "submitting" | "success" | "error";
 
-const initialData: FormData = {
-  name: "",
-  email: "",
-  subject: subjectOptions[0],
-  message: "",
-};
+export function useContactForm(initialSubject?: string) {
+  const startData: FormData = {
+    name: "",
+    email: "",
+    subject:
+      initialSubject && subjectOptions.includes(initialSubject)
+        ? initialSubject
+        : subjectOptions[0],
+    message: "",
+    website: "",
+  };
 
-export function useContactForm() {
-  const [data, setData] = useState<FormData>(initialData);
+  const [data, setData] = useState<FormData>(startData);
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<SubmitStatus>("idle");
 
@@ -42,9 +47,9 @@ export function useContactForm() {
     const next: FormErrors = {};
     if (!data.name.trim()) next.name = "Please enter your name";
     if (!data.email.trim()) next.email = "Please enter your email";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email))
-      next.email = "That doesn't look like a valid email";
-    if (!data.message.trim() || data.message.trim().length < 10)
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()))
+      next.email = "That doesn’t look like a valid email";
+    if (data.message.trim().length < 10)
       next.message = "Message should be at least 10 characters";
 
     setErrors(next);
@@ -57,10 +62,21 @@ export function useContactForm() {
 
     setStatus("submitting");
     try {
-      // TODO: replace with a real API route, e.g. POST /api/contact
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      // This used to be a fake 1.2s timeout, so no message was ever delivered.
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name.trim(),
+          email: data.email.trim(),
+          subject: data.subject,
+          message: data.message.trim(),
+          website: data.website,
+        }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setStatus("success");
-      setData(initialData);
+      setData({ ...startData, subject: data.subject });
     } catch {
       setStatus("error");
     }

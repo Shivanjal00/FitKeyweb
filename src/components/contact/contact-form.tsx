@@ -7,11 +7,16 @@ import Link from "next/link";
 import { useContactForm } from "@/hooks/use-contact-form";
 import { subjectOptions } from "@/lib/data/contact";
 
-export function ContactForm() {
-  const { data, errors, status, update, submit, setStatus } = useContactForm();
+export function ContactForm({
+  initialSubject,
+}: {
+  initialSubject?: string;
+}) {
+  const { data, errors, status, update, submit, setStatus } =
+    useContactForm(initialSubject);
 
   return (
-    <div className="rounded-[28px] border border-border bg-surface p-8 md:p-10">
+    <div className="relative rounded-[28px] border border-border bg-surface p-6 shadow-soft md:p-10">
       <AnimatePresence mode="wait">
         {status === "success" ? (
           <motion.div
@@ -21,7 +26,9 @@ export function ContactForm() {
             exit={{ opacity: 0 }}
             className="flex flex-col items-center justify-center py-12 text-center"
           >
-            <CheckCircle2 className="h-10 w-10 text-accent" strokeWidth={1.5} />
+            <span className="icon-badge h-14 w-14 rounded-full">
+              <CheckCircle2 className="h-7 w-7" strokeWidth={1.8} />
+            </span>
             <h3 className="mt-4 text-[19px] font-semibold text-foreground">
               Message sent
             </h3>
@@ -52,6 +59,18 @@ export function ContactForm() {
               We read every one. Expect a reply within one business day.
             </p>
 
+            {/* Honeypot: real people never see or fill this. */}
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden
+              value={data.website}
+              onChange={(e) => update("website", e.target.value)}
+              className="absolute -left-[9999px] h-0 w-0 opacity-0"
+            />
+
             <div className="mt-7 grid gap-5 sm:grid-cols-2">
               <Field
                 label="Your name"
@@ -71,7 +90,7 @@ export function ContactForm() {
             </div>
 
             <div className="mt-5">
-              <label className="text-[12px] font-semibold uppercase tracking-wide text-muted-foreground">
+              <label className="text-[12px] font-semibold text-foreground">
                 What&apos;s this about?
               </label>
               <div className="mt-2 flex flex-wrap gap-2">
@@ -93,10 +112,14 @@ export function ContactForm() {
             </div>
 
             <div className="mt-5">
-              <label className="text-[12px] font-semibold uppercase tracking-wide text-muted-foreground">
+              <label
+                htmlFor="contact-message"
+                className="text-[12px] font-semibold text-foreground"
+              >
                 Message
               </label>
               <textarea
+                id="contact-message"
                 value={data.message}
                 onChange={(e) => update("message", e.target.value)}
                 placeholder="Tell us a bit about what you need..."
@@ -108,7 +131,7 @@ export function ContactForm() {
                 }`}
               />
               {errors.message && (
-                <p className="mt-1.5 flex items-center gap-1 text-[12.5px] text-red-500">
+                <p className="mt-1.5 flex items-center gap-1 text-[12.5px] text-red-600">
                   <AlertCircle className="h-3.5 w-3.5" /> {errors.message}
                 </p>
               )}
@@ -118,7 +141,7 @@ export function ContactForm() {
               <p className="text-[12.5px] text-muted-foreground">
                 By sending, you agree to our{" "}
                 <Link
-                  href="#"
+                  href="/privacy"
                   className="underline underline-offset-2 hover:text-foreground"
                 >
                   privacy policy
@@ -144,9 +167,8 @@ export function ContactForm() {
             </div>
 
             {status === "error" && (
-              <p className="mt-4 flex items-center gap-1.5 text-[13px] text-red-500">
-                <AlertCircle className="h-4 w-4" /> Something went wrong. Please
-                try again.
+              <p className="mt-4 flex items-center gap-1.5 text-[13px] text-red-600">
+                <AlertCircle className="h-4 w-4" /> We couldn’t send your message. Please try again, or email us directly.
               </p>
             )}
           </motion.form>
@@ -173,10 +195,14 @@ function Field({
 }) {
   return (
     <div>
-      <label className="text-[12px] font-semibold uppercase tracking-wide text-muted-foreground">
+      <label
+        htmlFor={`contact-${label.toLowerCase().replace(/\s+/g, "-")}`}
+        className="text-[12px] font-semibold text-foreground"
+      >
         {label}
       </label>
       <input
+        id={`contact-${label.toLowerCase().replace(/\s+/g, "-")}`}
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -188,7 +214,7 @@ function Field({
         }`}
       />
       {error && (
-        <p className="mt-1.5 flex items-center gap-1 text-[12.5px] text-red-500">
+        <p className="mt-1.5 flex items-center gap-1 text-[12.5px] text-red-600">
           <AlertCircle className="h-3.5 w-3.5" /> {error}
         </p>
       )}

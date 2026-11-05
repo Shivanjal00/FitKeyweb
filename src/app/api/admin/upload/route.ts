@@ -2,16 +2,31 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProdStorage } from "@/lib/firebase-admin";
 import { randomUUID } from "crypto";
+import { ADMIN_COOKIE, isAdminSession } from "@/lib/admin-auth";
+
+const MAX_FILES = 10;
+const MAX_BYTES = 8 * 1024 * 1024; // 8 MB per photo
+const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 
 export async function POST(req: NextRequest) {
-  const session = req.cookies.get("fk_admin_session")?.value;
-  if (!session || session !== process.env.ADMIN_PASSWORD) {
+  if (!isAdminSession(req.cookies.get(ADMIN_COOKIE)?.value)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { files } = await req.json();
+  let files: { data: string }[];
+  try {
+    ({ files } = await req.json());
+  } catch {
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  }
   if (!Array.isArray(files) || files.length === 0) {
     return NextResponse.json({ error: "No files provided" }, { status: 400 });
+  }
+  if (files.length > MAX_FILES) {
+    return NextResponse.json(
+      { error: `Upload at most ${MAX_FILES} photos at a time` },
+      { status: 400 },
+    );
   }
 
   try {
@@ -19,10 +34,19 @@ export async function POST(req: NextRequest) {
     const urls: string[] = [];
 
     for (const file of files) {
-      const matches = file.data.match(/^data:(image\/\w+);base64,(.+)$/);
+      const matches = String(file?.data ?? "").match(
+        /^data:(image\/[a-z+.-]+);base64,(.+)$/i,
+      );
       if (!matches) continue;
-      const contentType = matches[1];
+      const contentType = matches[1].toLowerCase();
+      if (!ALLOWED.includes(contentType)) continue;
       const buffer = Buffer.from(matches[2], "base64");
+      if (buffer.length > MAX_BYTES) {
+        return NextResponse.json(
+          { error: "Each photo must be under 8 MB" },
+          { status: 413 },
+        );
+      }
       const ext = contentType.split("/")[1] || "jpg";
       const path = `listings/${randomUUID()}.${ext}`;
 

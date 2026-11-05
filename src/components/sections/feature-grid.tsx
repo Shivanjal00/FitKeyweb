@@ -43,8 +43,7 @@ export function FeatureGrid({
             {items.map((item, i) => (
               <Reveal key={item.title} delay={i * 0.06}>
                 <TiltCard className="group h-full rounded-3xl border border-border bg-background p-6 transition-colors duration-500 hover:border-foreground/40 hover:shadow-elevated">
-                  {" "}
-                  <div className="inline-grid h-10 w-10 place-items-center rounded-xl border border-border bg-surface text-foreground transition-colors group-hover:border-accent group-hover:text-accent">
+                  <div className="inline-grid h-10 w-10 place-items-center rounded-xl border border-border bg-surface text-foreground transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-foreground">
                     <item.icon
                       className="h-[18px] w-[18px]"
                       strokeWidth={1.8}
@@ -56,7 +55,7 @@ export function FeatureGrid({
                   <p className="mt-1.5 text-[13.5px] leading-relaxed text-muted-foreground">
                     {item.description}
                   </p>
-                </TiltCard>{" "}
+                </TiltCard>
               </Reveal>
             ))}
           </div>

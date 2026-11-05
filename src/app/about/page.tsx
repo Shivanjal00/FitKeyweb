@@ -14,7 +14,7 @@ export default function AboutPage() {
       <section className="border-b border-border bg-background">
         <div className="mx-auto max-w-7xl px-5 pb-16 pt-24 md:px-8 md:pt-32">
           <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-[12px] font-medium text-muted-foreground">
               {story.eyebrow}
             </span>
           </Reveal>
@@ -22,7 +22,7 @@ export default function AboutPage() {
             <h1 className="mt-6 max-w-2xl text-[36px] font-semibold leading-[1.08] tracking-tight text-foreground md:text-[52px]">
               {story.heading[0]}
               <br />
-              <span className="text-accent-secondary">{story.heading[1]}</span>
+              <span className="mark-lime">{story.heading[1]}</span>
             </h1>
           </Reveal>
           <Reveal delay={0.16}>
