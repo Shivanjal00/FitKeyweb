@@ -42,11 +42,13 @@ export const metadata: Metadata = {
     siteName: "Gymbym",
     locale: "en_IN",
     type: "website",
+    images: [{ url: "/logo.png", width: 1024, height: 1024, alt: "Gymbym" }],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Gymbym — Find Gyms & Libraries Near You",
     description: "Discover verified gyms and libraries in Delhi NCR.",
+    images: ["/logo.png"],
   },
   robots: {
     index: true,

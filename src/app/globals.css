@@ -12,6 +12,7 @@
   --color-accent: hsl(var(--accent));
   --color-accent-ink: hsl(var(--accent-ink));
   --color-accent-secondary: hsl(var(--accent-secondary));
+  --color-accent-secondary-ink: hsl(var(--accent-secondary-ink));
   --color-primary-foreground: hsl(var(--primary-foreground));
   --color-success: hsl(var(--success));
 
@@ -19,8 +20,8 @@
   --font-body: var(--font-body);
 
   --shadow-elevated: 0 20px 40px -12px rgba(0, 0, 0, 0.12);
-  --shadow-soft: 0 1px 2px rgba(17, 19, 21, 0.04),
-    0 8px 24px -12px rgba(17, 19, 21, 0.1);
+  --shadow-soft:
+    0 1px 2px rgba(17, 19, 21, 0.04), 0 8px 24px -12px rgba(17, 19, 21, 0.1);
 }
 
 :root {
@@ -33,6 +34,7 @@
   --accent: 78 88% 58%; /* Electric Lime #B8F23D — FILL only on light */
   --accent-ink: 80 78% 21%; /* Deep olive — lime's readable twin on light */
   --accent-secondary: 226 98% 66%; /* Cool Blue #4D7CFE */
+  --accent-secondary-ink: 226 78% 52%; /* readable blue for small text on light (5.4:1) */
   --primary-foreground: 60 20% 96%;
   --success: 100 62% 28%;
 }
@@ -96,6 +98,14 @@
 .bg-foreground.text-accent {
   color: hsl(var(--accent));
 }
+/* Blue as small text/icons on light surfaces: use the darker ink so it passes
+   contrast (#4D7CFE alone is 3.5:1). On dark sections it stays bright blue. */
+.text-accent-secondary {
+  color: hsl(var(--accent-secondary-ink));
+}
+.bg-foreground .text-accent-secondary {
+  color: hsl(var(--accent-secondary));
+}
 .fill-accent {
   fill: hsl(var(--accent));
 }
@@ -151,7 +161,11 @@
 /* Subtle noise-free grain-less hero wash */
 .hero-wash {
   background:
-    radial-gradient(60% 50% at 50% 0%, hsl(var(--accent) / 0.28), transparent 70%),
+    radial-gradient(
+      60% 50% at 50% 0%,
+      hsl(var(--accent) / 0.28),
+      transparent 70%
+    ),
     linear-gradient(to bottom, hsl(var(--surface)), hsl(var(--background)));
 }
 
