@@ -39,6 +39,9 @@ export function ContactMethodCard({
         <p className="mt-1 text-[13px] text-muted-foreground">{note}</p>
         <a
           href={href}
+          {...(href.startsWith("http")
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {})}
           className="group/link mt-4 rounded-full after:absolute after:inset-0 after:content-[''] inline-flex items-center gap-1 text-[13.5px] font-semibold text-foreground"
         >
           Reach out

@@ -16,10 +16,10 @@ export const contactMethods = [
   },
   {
     icon: "chat" as const,
-    label: "Live chat",
-    value: "Chat inside the app",
+    label: "WhatsApp",
+    value: "Chat on WhatsApp",
     note: "Fastest for booking issues",
-    href: "/onboarding",
+    href: "https://wa.me/918273045785?text=Hi%20Gymbym%2C%20I%20need%20help%20with%20",
   },
 ];
 
@@ -35,7 +35,9 @@ export const offices = [
   {
     city: "Delhi",
     tag: "Headquarters",
-    address: "Delhi, India",
+    address: "5/2, Dhaka Main Road, Near Kingsway Camp, Delhi – 110009",
     hours: "Mon–Fri · 10:00 – 6:00",
+    mapHref:
+      "https://www.google.com/maps/search/?api=1&query=5%2F2%20Dhaka%20Main%20Road%2C%20Near%20Kingsway%20Camp%2C%20Delhi%20110009",
   },
 ];

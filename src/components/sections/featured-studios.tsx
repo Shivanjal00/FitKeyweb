@@ -23,10 +23,10 @@ export async function FeaturedStudios() {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <span className="text-[12px] font-semibold text-muted-foreground">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 Featured studios
               </span>
-              <h2 className="mt-3 text-[34px] font-semibold leading-[1.05] tracking-tight text-foreground md:text-[48px]">
+              <h2 className="mt-4 text-[34px] font-semibold leading-[1.05] tracking-tight text-foreground md:text-[48px]">
                 Hand-picked, obsessively vetted.
               </h2>
             </div>

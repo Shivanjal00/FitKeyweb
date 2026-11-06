@@ -4,6 +4,7 @@
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 const SECRET_PATH = "/fk-vault-72q";
 const CLICK_WINDOW_MS = 500;
@@ -33,7 +34,7 @@ export function Logo() {
   }
 
   return (
-    <a
+    <Link
       href="/"
       onClick={handleClick}
       className="flex cursor-pointer items-center gap-2.5"
@@ -49,6 +50,6 @@ export function Logo() {
       <span className="text-[15px] font-semibold tracking-tight font-heading">
         Gymbym
       </span>
-    </a>
+    </Link>
   );
 }

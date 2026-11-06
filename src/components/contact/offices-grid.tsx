@@ -1,7 +1,7 @@
 // src/components/contact/offices-grid.tsx
 "use client";
 
-import { MapPin, Clock } from "lucide-react";
+import { MapPin, Clock, ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/effects/reveal";
 import { TiltCard } from "@/components/effects/tilt-card";
 import { offices } from "@/lib/data/contact";
@@ -27,6 +27,17 @@ export function OfficesGrid() {
             <div className="mt-2 flex items-center gap-2 text-[13.5px] text-muted-foreground">
               <Clock className="h-3.5 w-3.5 shrink-0" /> {office.hours}
             </div>
+            {office.mapHref && (
+              <a
+                href={office.mapHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-1 text-[13px] font-semibold text-foreground underline-offset-4 hover:underline"
+              >
+                Get directions
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </a>
+            )}
           </TiltCard>
         </Reveal>
       ))}
